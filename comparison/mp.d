@@ -29,6 +29,6 @@ void receiver() {
    }
    sw.stop();
    writeln("finished receiving");
-   writefln("received %d messages in %d msec sum=%d speed=%d msg/sec", n, sw.peek().msecs, s, n*1000L/sw.peek().msecs);
+   writefln("received %d messages in %d msec sum=%d speed=%d msg/msec", n, sw.peek().msecs, s, n/sw.peek().msecs);
    mainTid.send("finished");
 }

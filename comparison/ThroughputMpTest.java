@@ -19,7 +19,7 @@ public class ThroughputMpTest {
                 }
                 long t1=System.currentTimeMillis();
                 double d=t1-t0;
-                System.out.println(n+" messages received in "+d+" ms, sum="+s+" speed: "+1000*d/n+" microsec/message, "+1000*n/d+" messages/sec");
+                System.out.println(n+" messages received in "+d+" ms, sum="+s+" speed: "+1000*d/n+" microsec/message, "+n/d+" messages/msec");
             } catch (Exception e){
                 e.printStackTrace();
             }
