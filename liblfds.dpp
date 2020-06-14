@@ -1,0 +1,173 @@
+#include "queue_bmm.h"
+
+import core.thread;
+import std.traits;
+import std.stdio;
+import std.datetime;
+//alias StopWatch = std.datetime.stopwatch.StopWatch;
+import std.concurrency : receiveOnly, send, spawn, Tid, thisTid;
+
+alias voidpp = void**;
+extern(C) alias element_cleanup_callback = void function(lfds711_queue_bmm_state*, void*, void*);
+voidpp NULL_PTR = null;
+element_cleanup_callback NULL_CB = null;
+
+
+bool isStructInC(T)() {
+  static if (isAggregateType!T || isArray!T) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// this class is shared: otherwise, please use a normal queue
+shared class queue_bmm(T) {
+ public:
+
+  static if (isStructInC!T) {
+    alias PushT = ref T;
+    alias  PopT = T*;
+  } else {
+    alias PushT = T;
+    alias  PopT = T;
+  }
+
+  this(size_t n=1024) {
+    _queue = cast(shared)(queue_bmm_new(n));  // pointer from C is always global can be accessed by any threads
+  }
+
+  // return false, when the queue is full
+  bool push(ref T value) {
+   static if(isStructInC!T) {
+    void* v = cast(void*)(&value);
+   } else {
+    void* v = cast(void*)value;
+   }
+    return queue_bmm_push(cast(c_queue_bmm*)_queue, v);
+  }
+
+  // return !ok if queue empty
+  PopT pop(ref int ok) {
+    void* value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
+    return cast(PopT)value;
+  }
+
+  ~this() {
+    queue_bmm_destroy(cast(c_queue_bmm*)_queue);
+  }
+
+ private:
+  c_queue_bmm* _queue;
+}
+
+
+//unittest {
+
+const size_t n = 100_000_000;
+alias SafeQueue = queue_bmm;
+
+void threadProducer(shared(SafeQueue!int) queue) {
+  foreach (int i; 0..n) {
+    for (;;) {
+      if (queue.push(i)) {break;}
+      Thread.yield();
+    }
+  }
+}
+
+void threadConsumer(shared(SafeQueue!int) queue) {
+  StopWatch sw;
+  sw.start();  
+  long sum = 0;
+  int p;
+
+  foreach (i; 0..n) {
+    for (;;) {
+      int ok;
+      p = queue.pop(ok);
+      if (ok) {break;}
+      Thread.yield();
+    }
+    sum += p;
+  }
+
+  sw.stop();
+  writefln("received %d messages in %d msec sum=%d speed=%d msg/msec", n, sw.peek().msecs, sum, n/sw.peek().msecs);
+  assert(sum == (n*(n-1)/2));
+}
+
+void testIntQueue() {
+  auto queue = new shared(SafeQueue!int);
+
+  spawn(&threadProducer, queue);
+  spawn(&threadConsumer, queue);
+}
+
+void testStringQueue() {
+  string name = "string: Madge The Skutter";
+  string* temp_td;
+  int ok;
+
+  auto queue = new shared(queue_bmm!string);
+  assert(name == "string: Madge The Skutter");
+  queue.push(name);
+  name ~= "; after push & before pop";
+  temp_td = queue.pop(ok);
+
+  writeln(name);
+  writeln(*temp_td);
+  assert(name     == "string: Madge The Skutter; after push & before pop");
+  assert(*temp_td == "string: Madge The Skutter; after push & before pop");
+}
+
+void testStructQueue() {
+  struct test_data {
+    string name;
+  }
+
+  test_data  td;
+  test_data* temp_td;
+  td.name = "struct: Madge The Skutter";
+  int ok;
+
+  auto queue = new shared(queue_bmm!test_data);
+  assert(td.name == "struct: Madge The Skutter");
+  queue.push(td);
+  td.name ~= "; after push & before pop";
+  temp_td = queue.pop(ok);
+  assert(temp_td.name == "struct: Madge The Skutter; after push & before pop");
+
+  printf( "skutter name = %s %d\n", &(temp_td.name[0]), voidpp.sizeof );
+}
+
+void testClassQueue() {
+  class test_data {
+    string name;
+  }
+
+  test_data  td = new test_data;
+  test_data* temp_td;
+  td.name = "class: Madge The Skutter";
+  int ok;
+
+  auto queue = new shared(queue_bmm!test_data);
+  assert(td.name == "class: Madge The Skutter");
+  queue.push(td);
+  td.name ~= "; after push & before pop";
+  temp_td = queue.pop(ok);
+  assert(temp_td.name == "class: Madge The Skutter; after push & before pop");
+
+  printf( "skutter name = %s %d\n", &(temp_td.name[0]), voidpp.sizeof );
+}
+
+void main() {
+  testStringQueue();
+  testStructQueue();
+  testClassQueue();
+  testIntQueue();
+}
+
+//main();
+
+//}
