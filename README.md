@@ -3,7 +3,8 @@ liblfds for d
 
 ## Deps:
 1. https://code.dlang.org/packages/dpp
-2. https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer) download from https://www.liblfds.org/downloads/liblfds%20release%207.1.1%20source.tar.bz2
+2. https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer) 
+download from https://www.liblfds.org/downloads/liblfds%20release%207.1.1%20source.tar.bz2
 
 ## test
 
