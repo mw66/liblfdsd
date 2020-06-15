@@ -5,10 +5,10 @@ LDC_DFLAGS = -O4 --release --boundscheck=off
 DMD_DUB = DFLAGS="$(DMD_DFLAGS)" ${DMD}/windows/bin/dub.exe
 LDC_DUB = DFLAGS="$(LDC_DFLAGS)" ${LDC}/bin/dub
 
-ldcrun:
+ldc1p1c:
 	$(LDC_DUB) rwqueue.d
 
-dmdrun:
+dmd1p1c:
 	$(DMD_DUB) rwqueue.d
 
 
