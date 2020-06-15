@@ -1,5 +1,5 @@
 # liblfdsd
-liblfds for d
+liblfds for d, from the portable, license-free, lock-free data structure C library (https://www.liblfds.org/)
 
 ## Deps:
 1. https://code.dlang.org/packages/dpp
