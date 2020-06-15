@@ -12,6 +12,11 @@ $ make dmdrun
 received 1000000000 messages in 53607 msec sum=499999999500000000 speed=18654 msg/msec
 
 
+# test dlist: Lock-free deques and doubly linked lists
+$ make dlist
+received 1000000000 messages in 119041 msec sum=499999999500000000 speed=8400 msg/msec
+
+
 # compare message passing between Java & D
 
 $ make javamp
