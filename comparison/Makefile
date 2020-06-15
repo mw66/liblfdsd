@@ -26,3 +26,7 @@ dmp:
 plain_d_sync_queue:
 	ldc2 $(LDC_DFLAGS) plain_d_sync_queue.d
 	./plain_d_sync_queue
+
+go_d:
+	$(LDC_DUB) go.d
+

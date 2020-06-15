@@ -1,7 +1,7 @@
 #!/usr/bin/env dub
 /+ dub.sdl:
 name "app"
-//dependency "jin-go" version="~>2.0.0"
+dependency "jin-go" version="~>2.0.0"
 +/
 
 import std.datetime.stopwatch;
@@ -21,7 +21,7 @@ void threadProducer(Output!int queue)
 void main()
 {
 	Input!int queue;
-	go!threadProducer(queue.pair);
+	jin.go.go.go!threadProducer(queue.pair);
 
 	StopWatch sw;
 	sw.start();
