@@ -1,4 +1,4 @@
-module lock_free.dlist;
+//module lock_free.dlist;
 
 import std.algorithm, std.concurrency, std.conv, std.stdio;
 import core.atomic, core.thread;
@@ -11,8 +11,8 @@ shared class AtomicDList(T)
 {
     shared struct Node
     {
-        private Node* _prev;
-        private Node* _next;
+        private align(16) Node* _prev;
+        private align(16) Node* _next;
         private T _payload;
 
         this(shared T payload) shared
@@ -49,6 +49,11 @@ shared class AtomicDList(T)
         return this._head._next == &this._tail;
     }
 
+    bool full()
+    {
+        return false;  // it's never full
+    }
+
     void pushFront(shared T value)
     {
         auto newNode = new shared(Node)(value);
@@ -63,6 +68,7 @@ shared class AtomicDList(T)
         linkPrev(cast(shared)newNode, next);
     }
 
+    alias push = pushBack;
     void pushBack(shared T value)
     {
         auto newNode = new shared(Node)(value);
@@ -80,6 +86,7 @@ shared class AtomicDList(T)
         linkPrev(newNode, next);
     }
 
+    alias pop = popFront;
     @property shared(T)* popFront()
     {
         auto prev = &this._head;
