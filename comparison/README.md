@@ -25,4 +25,7 @@ $ make javamp
 $ make dmp
 received 100000000 messages in 27574 msec sum=4999999950000000 speed=3626 msg/msec
 
+
+# go.d using ldc
+received 100000000 messages in 2906 msec sum=4999999950000000 speed=34411 msg/msec
 ```
