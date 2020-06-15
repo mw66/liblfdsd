@@ -1,3 +1,9 @@
+#!/usr/bin/env dub
+/+ dub.sdl:
+name "app"
+//dependency "jin-go" version="~>2.0.0"
++/
+
 import std.datetime.stopwatch;
 import std.stdio;
 

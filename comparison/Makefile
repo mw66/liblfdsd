@@ -23,3 +23,6 @@ javamp:
 dmp:
 	$(LDC_DUB) mp.d
 
+plain_d_sync_queue:
+	ldc2 $(LDC_DFLAGS) plain_d_sync_queue.d
+	./plain_d_sync_queue
