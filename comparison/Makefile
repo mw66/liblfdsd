@@ -23,10 +23,18 @@ javamp:
 dmp:
 	$(LDC_DUB) mp.d
 
-plain_d_sync_queue:
+plain_sync_queue:
 	ldc2 $(LDC_DFLAGS) plain_d_sync_queue.d
 	./plain_d_sync_queue
 
 go_d:
 	$(LDC_DUB) go.d
 
+jin_go_q:
+	ldc2 $(LDC_DFLAGS) rwqueue.d jin_go_queue.d
+
+elembuf:
+	$(LDC_DUB) elembuf.d
+
+clean:
+	$(RM) *.o
