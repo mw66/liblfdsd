@@ -66,8 +66,6 @@ void main() //line 22
 			sum += elem;
 
 		consi += buffer.length;
-		if(consi == amount)
-			"breakpoint".writeln;
 
 		buffer = buffer[$..$];
 	}
