@@ -9,18 +9,19 @@ dflags "-O4" "--release" "--boundscheck=off" platform="ldc2"
 // dmd.exe  -release -m64 -boundscheck=off -O  rwqueue.d
 // ldc2 -O4 --release --boundscheck=off rwqueue.d
 
-import lock_free.rwqueue;
 
 import std.stdio;
 import std.datetime;
 import core.atomic;
 import core.thread, std.concurrency;
+import std.process;
 
 
 const n=1_000_000_000; //;_000
 enum amount = n;
 
-void push(T)(ref shared(RWQueue!T) queue) {
+void push(Q, T)(ref shared(Q) queue) {
+	writeln("p tid:", thisThreadID);
         foreach (i; 0 .. amount)
         {
             while (queue.full)
@@ -29,7 +30,8 @@ void push(T)(ref shared(RWQueue!T) queue) {
         }
 }
 
-void pop(T)(ref shared(RWQueue!T) queue) {
+void pop(Q, T)(ref shared(Q) queue) {
+   writeln("c tid:", thisThreadID);
    StopWatch sw;
    sw.start();  
    long s = 0;
@@ -47,11 +49,24 @@ void pop(T)(ref shared(RWQueue!T) queue) {
 }
 
 
-void main() {
+void run_test(Q, T)(ref shared(Q) queue) {
+    auto t0 = new Thread({push!(Q, T)(queue);}),
+         t1 = new Thread({ pop!(Q, T)(queue);});
+    t0.start();
+    t1.start();
+    t0.join();
+    t1.join();
+}
+
+void test_lock_free_rwqueue() {
+    import lock_free.rwqueue;
     static struct Data { size_t i; }
     shared(RWQueue!Data) queue;
-    auto t0 = new Thread({push(queue);}),
-        t1 = new Thread({pop(queue);});
-    t0.start(); t1.start();
-    t0.join(); t1.join();
+    run_test!(RWQueue!Data, Data)(queue);
 }
+
+
+void main() {
+  test_lock_free_rwqueue();
+}
+
