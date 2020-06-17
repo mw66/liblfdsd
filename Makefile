@@ -2,8 +2,8 @@
 LIBLFDS = ./liblfds7.1.1
 
 DPPFLAGS = --include-path=$(LIBLFDS)/liblfds711/inc --keep-d-files --compiler=ldc2 #dmd #
-LDC2_FLAGS = -d-debug
 LDC2_FLAGS = -O4 --release --boundscheck=off
+LDC2_FLAGS = -d-debug
 DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-llfds711
 
 d:
