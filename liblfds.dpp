@@ -12,11 +12,33 @@ extern(C) alias element_cleanup_callback = void function(lfds711_queue_bmm_state
 voidpp NULL_PTR = null;
 element_cleanup_callback NULL_CB = null;
 
+unittest {
+    import std.traits;
 
-bool isStructInC(T)() {
-  static if (isAggregateType!T || isArray!T) {
+    class C;
+    union U;
+    struct S;
+    interface I;
+    
+    static assert( isAggregateType!C);
+    static assert( isAggregateType!U);
+    static assert( isAggregateType!S);
+    static assert( isAggregateType!I);
+    static assert(!isAggregateType!void);
+    static assert(isArray!string);
+    static assert(isArray!(int[]));
+    static assert(!isAggregateType!(C[string]));
+    static assert(!isAggregateType!(void delegate(int)));
+}
+
+
+bool treatAsStructInC(T)() {
+  // https://dlang.org/library/std/traits/is_aggregate_type.html
+  // string, array is not isAggregateType
+  static if (is(T == struct) || is(T == union) || isArray!T) {
     return true;
   } else {
+    // basic type int|double, class, interface
     return false;
   }
 }
@@ -25,14 +47,18 @@ bool isStructInC(T)() {
 shared class queue_bmm(T) {  // do NOT use shared, let the user decide
  public:
 
-  static if (isStructInC!T) {
+  static if (treatAsStructInC!T) {
     alias PushT = ref T;
     alias  PopT = T*;
     immutable PopT invalidPop = null;
   } else {
     alias PushT = T;
     alias  PopT = T;
-    immutable PopT invalidPop = T.max;  // 0 is typically used by user!
+    static if (is(T == class) || is(T == interface)) {  // these are pointers in C
+      immutable PopT invalidPop = null;
+    } else {
+      immutable PopT invalidPop = T.max;  // 0 is typically used by user!
+    }
   }
 
   this(size_t n=1024) {
@@ -41,8 +67,9 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   }
 
   // return false, when the queue is full
+  // T: could be stuct|class, string|array, int|double
   bool push(ref T value) {
-   static if(isStructInC!T) {
+   static if(treatAsStructInC!T) {
     void* v = cast(void*)(&value);
    } else {
     void* v = cast(void*)value;
@@ -156,16 +183,17 @@ void testStringQueue() {
   assert(2 == queue.length());
   assert(queue.full());
 
-  name ~= "; after push & before pop";
+  name ~= "; change the pushed after push & before pop";
   temp_td = queue.pop();
   assert(1 == queue.length());
 
   writeln(name);
   writeln(*temp_td);
-  assert(name     == "string: Madge The Skutter; after push & before pop");
-  assert(*temp_td == "string: Madge The Skutter; after push & before pop");
+  assert(name     == "string: Madge The Skutter; change the pushed after push & before pop");
+  assert(*temp_td == "string: Madge The Skutter; change the pushed after push & before pop");
 
   temp_td = queue.pop();
+  writeln(*temp_td);
   assert(0 == queue.length());
   assert(*temp_td == "full");
 }
@@ -195,7 +223,7 @@ void testClassQueue() {
   }
 
   test_data  td = new test_data;
-  test_data* temp_td;
+  test_data temp_td;
   td.name = "class: Madge The Skutter";
 
   auto queue = new shared(queue_bmm!test_data);
@@ -204,6 +232,9 @@ void testClassQueue() {
   td.name ~= "; after push & before pop";
   temp_td = queue.pop();
   assert(temp_td.name == "class: Madge The Skutter; after push & before pop");
+
+  assert(td is temp_td);
+  assert(td == temp_td);
 
   printf( "skutter name = %s %d\n", &(temp_td.name[0]), voidpp.sizeof );
 }
