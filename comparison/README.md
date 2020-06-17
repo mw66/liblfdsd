@@ -11,6 +11,7 @@ received 1000000000 messages in 53607 msec sum=499999999500000000 speed=18654 ms
 
 # test dlist: Lock-free deques and doubly linked lists
 $ make dlist
+ldc2 -O4 --release --boundscheck=off dlist_test.d dlist.d
 received 1000000000 messages in 119041 msec sum=499999999500000000 speed=8400 msg/msec
 
 
