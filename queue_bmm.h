@@ -15,7 +15,7 @@ typedef struct {
 #define INLINE // dpp will remove 'inline' to generate .d; and in .c we need generate the symbol
 
 INLINE bool is_power_of_two(size_t x) {
-  return (x != 0) && ((x & (x - 1)) == 0);
+  return (x >= 2) && ((x & (x - 1)) == 0);
 }
 
 // create a new queue
