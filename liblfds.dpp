@@ -22,15 +22,17 @@ bool isStructInC(T)() {
 }
 
 // this class is shared: otherwise, please use a normal queue
-shared class queue_bmm(T) {
+shared class queue_bmm(T) {  // do NOT use shared, let the user decide
  public:
 
   static if (isStructInC!T) {
     alias PushT = ref T;
     alias  PopT = T*;
+    immutable PopT invalidPop = null;
   } else {
     alias PushT = T;
     alias  PopT = T;
+    immutable PopT invalidPop = T.max;  // 0 is typically used by user!
   }
 
   this(size_t n=1024) {
@@ -48,12 +50,21 @@ shared class queue_bmm(T) {
     return queue_bmm_push(cast(c_queue_bmm*)_queue, v);
   }
 
-  // return !ok if queue empty
-  PopT pop(ref int ok) {
+  // return invalidPop if queue empty
+  // https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Function_lfds711_queue_bmm_dequeue#Return_Value
+  // Returns 1 on a successful dequeue. Returns 0 if dequeing failed. Dequeuing only fails if the queue is empty.
+  PopT pop() {
+    int ok;
     void* value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
-    return cast(PopT)value;
+    if (ok) {
+      return cast(PopT)value;
+    }
+    return cast(PopT)invalidPop;
   }
 
+  bool isInvalid(ref PopT p) {
+    return p == cast(PopT)invalidPop;
+  }
 
   size_t length() {
     return queue_bmm_length(cast(c_queue_bmm*)_queue);
@@ -63,6 +74,9 @@ shared class queue_bmm(T) {
     return this.length() == capacity;
   }
 
+  /* this bool is not guaranteed to be correct!
+     https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Function_lfds711_queue_bmm_query#Notes
+  */
   bool empty() {
     return 0 == this.length();
   }
@@ -74,6 +88,7 @@ shared class queue_bmm(T) {
  private:
   c_queue_bmm* _queue;
   size_t capacity;
+  // PopT invalidPop;  // signal invalid element, e.g. pop from empty queue
 }
 
 
@@ -99,9 +114,11 @@ void threadConsumer(shared(SafeQueue!int) queue) {
 
   foreach (i; 0..n) {
     for (;;) {
-      int ok;
-      p = queue.pop(ok);
-      if (ok) {break;}
+      p = queue.pop();
+      // if (queue.isInvalid(p)) {  // empty may not be accurate, sync call on shared object is very expensive
+      if (p != queue.invalidPop) {
+        break;
+      }
       Thread.yield();
     }
     sum += p;
@@ -116,6 +133,7 @@ void threadConsumer(shared(SafeQueue!int) queue) {
 void testIntQueue() {
   auto queue = new shared(SafeQueue!int);
 
+  writeln(int.init, int.max, queue.invalidPop);
   spawn(&threadProducer, queue);
   spawn(&threadConsumer, queue);
 }
@@ -123,7 +141,6 @@ void testIntQueue() {
 void testStringQueue() {
   string name = "string: Madge The Skutter";
   string* temp_td;
-  int ok;
 
   auto queue = new shared(queue_bmm!string)(2);
   assert(0 == queue.length());
@@ -140,7 +157,7 @@ void testStringQueue() {
   assert(queue.full());
 
   name ~= "; after push & before pop";
-  temp_td = queue.pop(ok);
+  temp_td = queue.pop();
   assert(1 == queue.length());
 
   writeln(name);
@@ -148,7 +165,7 @@ void testStringQueue() {
   assert(name     == "string: Madge The Skutter; after push & before pop");
   assert(*temp_td == "string: Madge The Skutter; after push & before pop");
 
-  temp_td = queue.pop(ok);
+  temp_td = queue.pop();
   assert(0 == queue.length());
   assert(*temp_td == "full");
 }
@@ -161,13 +178,12 @@ void testStructQueue() {
   test_data  td;
   test_data* temp_td;
   td.name = "struct: Madge The Skutter";
-  int ok;
 
   auto queue = new shared(queue_bmm!test_data);
   assert(td.name == "struct: Madge The Skutter");
   queue.push(td);
   td.name ~= "; after push & before pop";
-  temp_td = queue.pop(ok);
+  temp_td = queue.pop();
   assert(temp_td.name == "struct: Madge The Skutter; after push & before pop");
 
   printf( "skutter name = %s %d\n", &(temp_td.name[0]), voidpp.sizeof );
@@ -181,13 +197,12 @@ void testClassQueue() {
   test_data  td = new test_data;
   test_data* temp_td;
   td.name = "class: Madge The Skutter";
-  int ok;
 
   auto queue = new shared(queue_bmm!test_data);
   assert(td.name == "class: Madge The Skutter");
   queue.push(td);
   td.name ~= "; after push & before pop";
-  temp_td = queue.pop(ok);
+  temp_td = queue.pop();
   assert(temp_td.name == "class: Madge The Skutter; after push & before pop");
 
   printf( "skutter name = %s %d\n", &(temp_td.name[0]), voidpp.sizeof );

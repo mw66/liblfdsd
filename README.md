@@ -18,4 +18,5 @@ string: Madge The Skutter; after push & before pop
 skutter name = struct: Madge The Skutter; after push & before pop 8
 skutter name = class: Madge The Skutter; after push & before pop 8
 received 100000000 messages in 4632 msec sum=4999999950000000 speed=21588 msg/msec
+received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/msec
 ```
