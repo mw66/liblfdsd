@@ -52,6 +52,14 @@ INLINE void* queue_bmm_pop(c_queue_bmm* queue, int* ok) {
   return NULL;
 }
 
+
+// length
+INLINE size_t queue_bmm_length(c_queue_bmm* queue) {
+  lfds711_pal_uint_t len;
+  lfds711_queue_bmm_query(&(queue->qstate), LFDS711_QUEUE_BMM_QUERY_GET_POTENTIALLY_INACCURATE_COUNT, NULL, &len);
+  return len;
+}
+
 // destroy the queue
 INLINE void queue_bmm_destroy(c_queue_bmm* queue) {
   lfds711_queue_bmm_cleanup(&(queue->qstate), NULL );

@@ -53,6 +53,12 @@ shared class queue_bmm(T) {
     return cast(PopT)value;
   }
 
+
+  size_t length() {
+    return queue_bmm_length(cast(c_queue_bmm*)_queue);
+  }
+
+
   ~this() {
     queue_bmm_destroy(cast(c_queue_bmm*)_queue);
   }
@@ -97,6 +103,7 @@ void threadConsumer(shared(SafeQueue!int) queue) {
   assert(sum == (n*(n-1)/2));
 }
 
+// will push pop 100_000_000 int
 void testIntQueue() {
   auto queue = new shared(SafeQueue!int);
 
@@ -110,10 +117,15 @@ void testStringQueue() {
   int ok;
 
   auto queue = new shared(queue_bmm!string);
+  assert(0 == queue.length());
+
   assert(name == "string: Madge The Skutter");
   queue.push(name);
+  assert(1 == queue.length());
+
   name ~= "; after push & before pop";
   temp_td = queue.pop(ok);
+  assert(0 == queue.length());
 
   writeln(name);
   writeln(*temp_td);
