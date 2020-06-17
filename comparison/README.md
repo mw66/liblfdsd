@@ -25,4 +25,9 @@ received 100000000 messages in 27574 msec sum=4999999950000000 speed=3626 msg/ms
 # go.d using ldc
 $ make go_d
 received 100000000 messages in 2906 msec sum=4999999950000000 speed=34411 msg/msec
+
+
+# elembuf backed plain D sync queue
+$ make elembuf_sync_q
+received 100000000 messages in 27078 msec sum=5000000050000000 speed=3693 msg/msec
 ```
