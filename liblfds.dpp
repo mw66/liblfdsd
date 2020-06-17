@@ -38,7 +38,8 @@ bool treatAsStructInC(T)() {
   static if (is(T == struct) || is(T == union) || isArray!T) {
     return true;
   } else {
-    // basic type int|double, class, interface
+    // basic type int|double will be treated as it is
+    // class, interface are treated as pointers in C
     return false;
   }
 }
