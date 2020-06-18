@@ -35,7 +35,7 @@ The only thing interfacing is simple the (void*) as *value*.
 
 The only extra requirement on the D side is to keep reference to those fat objects to avoid it being GC-ed before being pop-ed.
 
-(Just as don't push a stack var into any-type-of queue, and pop it after the stack is gone -- this are the responsibility of the programmer, not the container.)
+(Just as: don't push a stack var into any-type-of queue, and pop it after the stack is gone -- this is the responsibility of the *programmer*, not the container.)
 
 That's all.
 
