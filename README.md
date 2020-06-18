@@ -35,7 +35,7 @@ E.g.
 
 "
 To make those initial values valid (which is to say, visible) upon other logical cores, threads on those cores need to issue the define
-
+ LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE, which does that which it says; any init calls, which have completed (i.e. returned) on any other logical cores will now be valid (visible) on this logical core.
 
 https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Define_LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE
 "
