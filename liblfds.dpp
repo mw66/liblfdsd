@@ -3,6 +3,7 @@
 import core.thread;
 import std.traits;
 import std.stdio;
+import std.typecons;
 import std.datetime;
 //alias StopWatch = std.datetime.stopwatch.StopWatch;
 import std.concurrency : receiveOnly, send, spawn, Tid, thisTid;
@@ -29,6 +30,12 @@ unittest {
     static assert(isArray!(int[]));
     static assert(!isAggregateType!(C[string]));
     static assert(!isAggregateType!(void delegate(int)));
+
+    string s = "hello";
+    assert(false, __traits(isRef, s));
+
+    int[] arr = [1,2,3];
+    assert(false, __traits(isRef, arr));
 }
 
 
@@ -49,6 +56,7 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
  public:
 
   static if (treatAsStructInC!T) {
+    // alias PushT = ref Typedef!(T);
     alias PushT = ref T;
     alias  PopT = T*;
     immutable PopT invalidPop = null;
@@ -69,7 +77,9 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
 
   // return false, when the queue is full
   // T: could be stuct|class, string|array, int|double
-  bool push(ref T value) {
+  // bool push(PushT value) {
+  // https://dlang.org/spec/template.html#auto-ref-parameters
+  bool push(T)(auto ref T value) {
    static if(treatAsStructInC!T) {
     void* v = cast(void*)(&value);
    } else {
@@ -91,7 +101,7 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   }
 
   bool isInvalid(ref PopT p) {
-    return p == cast(PopT)invalidPop;
+    return p is cast(PopT)invalidPop;
   }
 
   size_t length() {
