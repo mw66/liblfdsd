@@ -12,7 +12,7 @@ d:
 	d++ $(DPPFLAGS)  liblfds.dpp $(LDC2_FLAGS) -L$(DMDLIB)
 
 
-CFLAGS = -I$(LIBLFDS)/liblfds711/inc -oFast # -std=gnu11
+CFLAGS = -I$(LIBLFDS)/liblfds711/inc -Ofast # -std=gnu11
 LIB = -L$(LIBLFDS)/liblfds711/bin -llfds711
 
 c:
