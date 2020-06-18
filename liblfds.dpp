@@ -1,6 +1,8 @@
 #include "queue_bmm.h"
 
+import core.memory;
 import core.thread;
+
 import std.traits;
 import std.stdio;
 import std.typecons;
@@ -78,6 +80,9 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   bool push(T)(ref T value) {
    static if(treatAsStructInC!T) {
     void* v = cast(void*)(&value);
+    // https://dlang.org/phobos/core_memory.html#addRoot
+    GC.addRoot(v);
+    GC.setAttr(v, GC.BlkAttr.NO_MOVE);
    } else {
     void* v = cast(void*)value;
    }
@@ -91,6 +96,10 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
     int ok;
     void* value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
     if (ok) {
+      static if(treatAsStructInC!T) {
+        GC.removeRoot(value);
+        GC.clrAttr(value, GC.BlkAttr.NO_MOVE);
+      }
       return cast(PopT)value;
     }
     return cast(PopT)invalidPop;
