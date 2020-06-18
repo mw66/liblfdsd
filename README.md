@@ -1,3 +1,5 @@
+[Warning: Work-In-Progress]
+
 # liblfdsd
 liblfds for d, from the portable, license-free, lock-free data structure C library (https://www.liblfds.org/)
 
@@ -23,7 +25,7 @@ received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/ms
 
 ## Design, user must read to use this wrapper library!
 
-### to use this libary, you have to know how the orginal C library work
+### To use this libary, you have to know how the orginal C library work
 
 Please read the C-doc before using this D wrapper lib:
 
@@ -71,3 +73,20 @@ The only extra requirement on the D side is to keep reference to those fat objec
 
 That's all.
 
+And please remember to keep a reference on the D side of the fat objects you put in the container:
+
+E.g.
+
+Don't:
+```
+  queue.push(new Object); // receiver may get garbage reference
+  queue.push(FatStruct()); // temporary is gone after push()
+  queue.push(createStuff!options()); // yeah, createStuff is
+```
+
+Instead, rewritten them as:
+
+```
+dSideRefHolderVar = dSideWhateverStuff();
+queue.push(dSideRefHolderVar);
+```
