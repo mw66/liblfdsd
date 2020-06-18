@@ -22,10 +22,12 @@ synchronized class SafeQueue(T)
     // Note: must be private in synchronized
     // classes otherwise D complains.
     //private T[] elements;
-    private Buffer!T elements;
+    alias BufferT = Buffer!T;  // (T, true);
+    private BufferT elements;
 
     void push(T value) {
-        elements ~= value;
+        // auto arr = [value];
+        cast(BufferT)elements << [value]; //.fill(cast(T[])arr);
     }
 
     /// Return T.init if queue empty
@@ -33,10 +35,10 @@ synchronized class SafeQueue(T)
         //import std.array : empty;
         T value;
 	//if (elements.empty)
-        if (0 == (cast(Buffer!T)elements).length)
+        if (0 == (cast(BufferT)elements).length)
             return value;
         value = elements[0];
-        cast(Buffer!T)elements = (cast(Buffer!T)elements)[1 .. $];
+        cast(BufferT)elements = (cast(BufferT)elements)[1 .. $];
         return value;
     }
 }
