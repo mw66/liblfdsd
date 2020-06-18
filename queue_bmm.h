@@ -18,6 +18,10 @@ INLINE bool is_power_of_two(size_t x) {
   return (x >= 2) && ((x & (x - 1)) == 0);
 }
 
+INLINE void ensure_lfds_valid_init_on_current_logical_core() {
+  LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE;
+}
+
 // create a new queue
 // size: must be a positive integer power of 2 (2, 4, 8, 16, etc)
 INLINE c_queue_bmm* queue_bmm_new(size_t size) {
