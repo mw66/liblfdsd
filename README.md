@@ -84,7 +84,7 @@ Don't:
   queue.push(createStuff!options());  // createStuff is somewhere inside 20kLOC in another module
 ```
 
-Instead, rewritten them as:
+Instead, rewrite them as:
 
 ```
 dSideRefHolderVar = dSideWhateverStuff();
