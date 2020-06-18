@@ -79,9 +79,9 @@ E.g.
 
 Don't:
 ```
-  queue.push(new Object); // receiver may get garbage reference
-  queue.push(FatStruct()); // temporary is gone after push()
-  queue.push(createStuff!options()); // yeah, createStuff is
+  queue.push(new Object);             // receiver may get garbage reference
+  queue.push(FatStruct());            // temporary is gone after push()
+  queue.push(createStuff!options());  // createStuff is somewhere inside 20kLOC in another module
 ```
 
 Instead, rewritten them as:
