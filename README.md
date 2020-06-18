@@ -1,6 +1,4 @@
-[Warning: Work-In-Progress]
-
-# liblfdsd
+# [Warning: Work-In-Progress] liblfdsd
 liblfds for d, from the portable, license-free, lock-free data structure C library (https://www.liblfds.org/)
 
 ## Deps:
@@ -62,7 +60,7 @@ Let C's be C's, and let D's be D's, i.e.
 * C manage C's memory (the container), and
 * D manage D's memory (the objects)
 
-The only thing interfacing is simple the (void*) as *value*.
+The only thing interfacing between C and D is the simple (void*) as *value*.
 
 * all primitive types | class (pointers)'s *value* are stored as value of (void*)
 * all (fat) objects' *address* are stored as value of (void*)
