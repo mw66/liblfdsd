@@ -6,8 +6,7 @@ import core.thread;
 import std.traits;
 import std.stdio;
 import std.typecons;
-import std.datetime;
-//alias StopWatch = std.datetime.stopwatch.StopWatch;
+import std.datetime.stopwatch;
 import std.concurrency : receiveOnly, send, spawn, Tid, thisTid;
 
 alias voidpp = void**;
@@ -34,10 +33,10 @@ unittest {
     static assert(!isAggregateType!(void delegate(int)));
 
     string s = "hello";
-    assert(false, __traits(isRef, s));
+    assert(false == __traits(isRef, s));
 
     int[] arr = [1,2,3];
-    assert(false, __traits(isRef, arr));
+    assert(false == __traits(isRef, arr));
 }
 
 
@@ -135,7 +134,6 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
 }
 
 
-//unittest {
 
 const size_t n = 100_000_000;
 alias SafeQueue = queue_bmm;
@@ -158,8 +156,8 @@ void threadConsumer(shared(SafeQueue!int) queue) {
   foreach (i; 0..n) {
     for (;;) {
       p = queue.pop();
-      // if (queue.isInvalid(p)) {  // empty may not be accurate, sync call on shared object is very expensive
-      if (p != queue.invalidPop) {
+      // if (queue.isInvalid(p)) {} // sync call on shared object is very expensive
+      if (p != queue.invalidPop) {  // empty may not be accurate
         break;
       }
       Thread.yield();
@@ -168,10 +166,11 @@ void threadConsumer(shared(SafeQueue!int) queue) {
   }
 
   sw.stop();
-  writefln("received %d messages in %d msec sum=%d speed=%d msg/msec", n, sw.peek().msecs, sum, n/sw.peek().msecs);
+  writefln("received %d messages in %d msec sum=%d speed=%d msg/msec", n, sw.peek().total!"msecs", sum, n/sw.peek().total!"msecs");
   assert(sum == (n*(n-1)/2));
 }
 
+unittest {
 // will push pop 100_000_000 int
 void testIntQueue() {
   auto queue = new shared(SafeQueue!int);
@@ -179,6 +178,8 @@ void testIntQueue() {
   writeln(int.init, int.max, queue.invalidPop);
   spawn(&threadProducer, queue);
   spawn(&threadConsumer, queue);
+
+  thread_joinAll();
 }
 
 void testStringQueue() {
@@ -262,6 +263,10 @@ void main() {
   testIntQueue();
 }
 
-//main();
+main();
 
-//}
+}
+
+version(LIBLFDS_TEST) {
+  void main() {}
+}
