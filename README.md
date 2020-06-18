@@ -57,7 +57,7 @@ Because it’s much better than the ~4x times slower fewly-used D queues I have 
 
 ### This is a thin wrapper in D
 
-C is C, D is D. So let
+Let C's be C's, and let D's be D's, i.e.
 
 * C manage C's memory (the container), and
 * D manage D's memory (the objects)
