@@ -25,13 +25,13 @@ received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/ms
 
 C is C, D is D. So let
 
--- C manage C's memory (the container), and
--- D manage D's memory (the objects)
+* C manage C's memory (the container), and
+* D manage D's memory (the objects)
 
 The only thing interfacing is simple the (void*) as *value*.
 
--- all primitive types | class (pointers)'s *value* are stored as value of (void*)
--- all (fat) objects' *address* are stored as value of (void*)
+* all primitive types | class (pointers)'s *value* are stored as value of (void*)
+* all (fat) objects' *address* are stored as value of (void*)
 
 The only extra requirement on the D side is to keep reference to those fat objects to avoid it being GC-ed before being pop-ed.
 
