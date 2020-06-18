@@ -87,6 +87,6 @@ Don't:
 Instead, rewrite them as:
 
 ```
-dSideRefHolderVar = dSideWhateverStuff();
-queue.push(dSideRefHolderVar);
+  dSideRefHolder_toPreventGC_BeforePoped_Var = dSideWhateverStuff();
+  queue.push(dSideRefHolder_toPreventGC_BeforePoped_Var);
 ```
