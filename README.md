@@ -55,7 +55,7 @@ Yet, this library is the best time tested open source library on the internet. I
 Because it’s much better than the ~4x times slower fewly-used D queues I have found.
 
 
-### This is a thin wrapper in D
+### Memory management: remember this is a thin wrapper lib in D
 
 Let C's be C's, and let D's be D's, i.e.
 
