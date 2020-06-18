@@ -6,9 +6,9 @@ liblfds for d, from the portable, license-free, lock-free data structure C libra
 2. https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer) 
    #### download from https://www.liblfds.org/downloads/liblfds%20release%207.1.1%20source.tar.bz2
 
-## test
+## Test
 
-After install deps:
+After install all the deps:
 
 ```
 $ make d
@@ -21,9 +21,9 @@ received 100000000 messages in 4632 msec sum=4999999950000000 speed=21588 msg/ms
 received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/msec
 ```
 
-## Design, user must read to use this wrapper library!
+## Design: user MUST read this to use this wrapper library!
 
-### To use this libary, you have to know how the orginal C library work
+### To use this libary, you have to know how the orginal C library works
 
 Please read the C-doc before using this D wrapper lib:
 
