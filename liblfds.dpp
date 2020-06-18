@@ -56,12 +56,9 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
  public:
 
   static if (treatAsStructInC!T) {
-    // alias PushT = ref Typedef!(T);
-    alias PushT = ref T;
     alias  PopT = T*;
     immutable PopT invalidPop = null;
   } else {
-    alias PushT = T;
     alias  PopT = T;
     static if (is(T == class) || is(T == interface)) {  // these are pointers in C
       immutable PopT invalidPop = null;
@@ -77,9 +74,8 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
 
   // return false, when the queue is full
   // T: could be stuct|class, string|array, int|double
-  // bool push(PushT value) {
-  // https://dlang.org/spec/template.html#auto-ref-parameters
-  bool push(T)(auto ref T value) {
+  // we *always* want to pass by ref, the value should never be copied
+  bool push(T)(ref T value) {
    static if(treatAsStructInC!T) {
     void* v = cast(void*)(&value);
    } else {
