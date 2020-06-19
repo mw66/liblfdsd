@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "queue_bmm.h"
+#include "queue_bmm_bss.h"
 
 struct test_data
 {
@@ -21,8 +21,6 @@ int use_liblfds711_h_main()  // use raw "liblfds711.h"
     td,
     *temp_td;
 
-  void* vp;
-
   lfds711_queue_bmm_init_valid_on_current_logical_core( &qbmms, qbmme, 8, NULL );
 
   strcpy( td.name, "Madge The Skutter" );
@@ -31,7 +29,7 @@ int use_liblfds711_h_main()  // use raw "liblfds711.h"
 
   lfds711_queue_bmm_dequeue( &qbmms, NULL, (void**)(&temp_td) );
 
-  printf( "skutter name = %s %lu %d\n", temp_td->name, sizeof(vp), LFDS711_PAL_ATOMIC_ISOLATION_IN_BYTES );
+  printf( "skutter name = %s %d\n", temp_td->name, LFDS711_PAL_ATOMIC_ISOLATION_IN_BYTES );
 
   lfds711_queue_bmm_cleanup( &qbmms, NULL );
 
