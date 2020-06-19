@@ -7,16 +7,22 @@ LDC2_FLAGS = -debug #-d
 DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfds711
 
 d:
-	gcc $(CFLAGS) -c queue_bmm.c
-	ar rcs liblfdsd.a queue_bmm.o
+	sed 's/bmm/bss/g' queue_bmm.h > queue_bss.h
+	gcc $(CFLAGS) -c queue_bmm_bss.c
+	ar rcs liblfdsd.a queue_bmm_bss.o
 	d++ $(DPPFLAGS)  liblfds.dpp
 	ldmd2 -unittest -version=LIBLFDS_TEST liblfds.d $(LDC2_FLAGS) -L$(DMDLIB)
 	./liblfds
 
 
 CFLAGS = -I$(LIBLFDS)/liblfds711/inc -Ofast # -std=gnu11
-LIB = -L$(LIBLFDS)/liblfds711/bin -llfds711
+LDFLAGS = -L$(LIBLFDS)/liblfds711/bin -llfds711
 
 c:
-	gcc $(CFLAGS)    queue_bmm_test.c  $(LIB)  -o queue_bmm_test
+	gcc $(CFLAGS)  queue_bmm_test.c  $(LDFLAGS)  -o queue_bmm_test
+	gcc $(CFLAGS)  queue_bss_test.c  $(LDFLAGS)  -o queue_bss_test
 
+
+
+clean:
+	$(RM) *.o *.a

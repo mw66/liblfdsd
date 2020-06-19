@@ -1,6 +1,5 @@
-#include <stdbool.h>
-#include <stdlib.h>
-#include "liblfds711.h"
+#ifndef queue_bmm_h
+#define queue_bmm_h
 
 typedef struct {
   // https://port70.net/~nsz/c/c11/n1570.html#6.7.2.1p15
@@ -10,17 +9,6 @@ typedef struct {
   lfds711_pal_uint_t number_elements;
   void *user_state;  // do we need this? always set to NULL now
 } c_queue_bmm;
-
-
-#define INLINE // dpp will remove 'inline' to generate .d; and in .c we need generate the symbol
-
-INLINE bool is_power_of_two(size_t x) {
-  return (x >= 2) && ((x & (x - 1)) == 0);
-}
-
-INLINE void ensure_lfds_valid_init_on_current_logical_core() {
-  LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE;
-}
 
 // create a new queue
 // size: must be a positive integer power of 2 (2, 4, 8, 16, etc)
@@ -71,3 +59,5 @@ INLINE void queue_bmm_destroy(c_queue_bmm* queue) {
   free(queue);
 }
 
+
+#endif//queue_bmm_h
