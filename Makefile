@@ -7,6 +7,7 @@ LDC2_FLAGS = -debug #-d
 DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfds711
 
 d:
+	make clean
 	sed 's/bmm/bss/g' queue_bmm.h > queue_bss.h
 	gcc $(CFLAGS) -c queue_bmm_bss.c
 	ar rcs liblfdsd.a queue_bmm_bss.o
@@ -19,8 +20,11 @@ CFLAGS = -I$(LIBLFDS)/liblfds711/inc -Ofast # -std=gnu11
 LDFLAGS = -L$(LIBLFDS)/liblfds711/bin -llfds711
 
 c:
+	make clean
 	gcc $(CFLAGS)  queue_bmm_test.c  $(LDFLAGS)  -o queue_bmm_test
 	gcc $(CFLAGS)  queue_bss_test.c  $(LDFLAGS)  -o queue_bss_test
+	./queue_bmm_test
+	./queue_bss_test
 
 
 
