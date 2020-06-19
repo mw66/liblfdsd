@@ -3,6 +3,7 @@
 import core.memory;
 import core.thread;
 
+import std.array;
 import std.traits;
 import std.stdio;
 import std.typecons;
@@ -52,6 +53,8 @@ bool treatAsStructInC(T)() {
   }
 }
 
+enum queue_bmm_decl = q{
+
 // this class is shared: otherwise, please use a normal queue
 shared class queue_bmm(T) {  // do NOT use shared, let the user decide
  public:
@@ -95,11 +98,12 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
     int ok;
     void* value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
     if (ok) {
+      PopT result = cast(PopT)value;
       static if(treatAsStructInC!T) {
         GC.removeRoot(value);
         GC.clrAttr(value, GC.BlkAttr.NO_MOVE);
       }
-      return cast(PopT)value;
+      return result;
     }
     return cast(PopT)invalidPop;
   }
@@ -133,12 +137,20 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   // PopT invalidPop;  // signal invalid element, e.g. pop from empty queue
 }
 
+};
+
+enum queue_bss_decl = queue_bmm_decl.replace("bmm", "bss");
+
+mixin(queue_bmm_decl);
+mixin(queue_bss_decl);
+
 
 
 const size_t n = 100_000_000;
-alias SafeQueue = queue_bmm;
+alias SafeQueue = queue_bss;
 
 void threadProducer(shared(SafeQueue!int) queue) {
+  ensure_lfds_valid_init_on_current_logical_core();
   foreach (int i; 0..n) {
     for (;;) {
       if (queue.push(i)) {break;}
@@ -148,6 +160,7 @@ void threadProducer(shared(SafeQueue!int) queue) {
 }
 
 void threadConsumer(shared(SafeQueue!int) queue) {
+  ensure_lfds_valid_init_on_current_logical_core();
   StopWatch sw;
   sw.start();  
   long sum = 0;
@@ -186,7 +199,9 @@ void testStringQueue() {
   string name = "string: Madge The Skutter";
   string* temp_td;
 
-  auto queue = new shared(queue_bmm!string)(2);
+  auto queue = new shared(SafeQueue!string)(2);
+  ensure_lfds_valid_init_on_current_logical_core();
+
   assert(0 == queue.length());
   assert(queue.empty());
   assert(!queue.full());
@@ -224,7 +239,7 @@ void testStructQueue() {
   test_data* temp_td;
   td.name = "struct: Madge The Skutter";
 
-  auto queue = new shared(queue_bmm!test_data);
+  auto queue = new shared(SafeQueue!test_data);
   assert(td.name == "struct: Madge The Skutter");
   queue.push(td);
   td.name ~= "; after push & before pop";
@@ -243,7 +258,7 @@ void testClassQueue() {
   test_data temp_td;
   td.name = "class: Madge The Skutter";
 
-  auto queue = new shared(queue_bmm!test_data);
+  auto queue = new shared(SafeQueue!test_data);
   assert(td.name == "class: Madge The Skutter");
   queue.push(td);
   td.name ~= "; after push & before pop";

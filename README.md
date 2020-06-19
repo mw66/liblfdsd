@@ -13,12 +13,16 @@ After install all the deps:
 ```
 $ make d
 $ ./liblfds
+# bmm queue
 string: Madge The Skutter; after push & before pop
 string: Madge The Skutter; after push & before pop
 skutter name = struct: Madge The Skutter; after push & before pop 8
 skutter name = class: Madge The Skutter; after push & before pop 8
 received 100000000 messages in 4632 msec sum=4999999950000000 speed=21588 msg/msec
 received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/msec
+
+# bss queue
+received 100000000 messages in 2610 msec sum=4999999950000000 speed=38314 msg/msec
 ```
 
 ## Design: user MUST read this to use this wrapper library!
