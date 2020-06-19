@@ -1,6 +1,6 @@
 #include "queue_bmm_bss.h"
 
-import core.memory;
+// import core.memory; do NOT import this, we intentionally do NOT want any GC function to compile! ref:do_NOT_GC.removeRoot
 import core.thread;
 
 import std.array;
@@ -82,9 +82,12 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   bool push(T)(ref T value) {
    static if(treatAsStructInC!T) {
     void* v = cast(void*)(&value);
+    /* we can NOT do this! this same object could be in multiple such C-containers
+    ref:do_NOT_GC.removeRoot
     // https://dlang.org/phobos/core_memory.html#addRoot
     GC.addRoot(v);
     GC.setAttr(v, GC.BlkAttr.NO_MOVE);
+    */
    } else {
     void* v = cast(void*)value;
    }
@@ -100,8 +103,12 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
     if (ok) {
       PopT result = cast(PopT)value;
       static if(treatAsStructInC!T) {
+        /* we can NOT do this! this same object could be in multiple such C-containers;
+           we can NOT put it back to GC, just because it's popped from this queue
+        ref:do_NOT_GC.removeRoot
         GC.removeRoot(value);
         GC.clrAttr(value, GC.BlkAttr.NO_MOVE);
+        */
       }
       return result;
     }
@@ -272,7 +279,7 @@ void testClassQueue() {
 }
 
 void main() {
-  testStringQueue();
+//testStringQueue();  TODO: revive for queue_bss;
   testStructQueue();
   testClassQueue();
   testIntQueue();
