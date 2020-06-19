@@ -12,8 +12,8 @@ import std.concurrency : receiveOnly, send, spawn, Tid, thisTid;
 
 alias voidpp = void**;
 extern(C) alias element_cleanup_callback = void function(lfds711_queue_bmm_state*, void*, void*);
-voidpp NULL_PTR = null;
-element_cleanup_callback NULL_CB = null;
+immutable voidpp NULL_PTR = null;
+immutable element_cleanup_callback NULL_CB = null;
 
 unittest {
     import std.traits;
