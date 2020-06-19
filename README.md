@@ -4,8 +4,8 @@ liblfds for d, from the portable, license-free, lock-free data structure C libra
 ## Deps:
 1. https://code.dlang.org/packages/dpp
 2. https://www.liblfds.org/
-  1. https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer) 
-  2. https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_single_producer,_single_consumer)
+  a. https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer) 
+  b. https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_single_producer,_single_consumer)
   ##### download from https://www.liblfds.org/downloads/liblfds%20release%207.1.1%20source.tar.bz2
 
 ## Test
