@@ -23,6 +23,10 @@ javamp:
 dmp:
 	$(LDC_DUB) mp.d
 
+elembuf_wait_free:
+	$(LDC_DUB) build --single elembuf.d
+	./app
+
 elembuf_sync_q:
 	$(LDC_DUB) elembuf_sync_queue.d
 
@@ -31,9 +35,6 @@ go_d:
 
 jin_go_q:
 	ldc2 $(LDC_DFLAGS) rwqueue.d jin_go_queue.d
-
-elembuf:
-	$(LDC_DUB) elembuf.d
 
 clean:
 	$(RM) *.o

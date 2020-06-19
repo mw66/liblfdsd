@@ -29,6 +29,10 @@ $ make go_d
 received 100000000 messages in 2906 msec sum=4999999950000000 speed=34411 msg/msec
 
 
+# elembuf wait free queue (with producer in fill src delegate)
+$ make elembuf_wait_free
+received 1000000000 messages in 2732 msec sum=499999999500000000 speed=366032 msg/msec
+
 # elembuf backed plain D sync queue
 $ make elembuf_sync_q
 received 100000000 messages in 27078 msec sum=5000000050000000 speed=3693 msg/msec
