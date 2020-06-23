@@ -60,7 +60,7 @@ void main() //line 22
 
 	while(consi < amount)
 	{
-		buffer ~= src;
+		buffer ~= buffer.source;
 
 		foreach(elem; buffer)
 			sum += elem;
