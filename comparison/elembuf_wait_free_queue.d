@@ -22,7 +22,7 @@ enum amount = n;
 
 void main() //line 22
 {
-    auto buffer = buffer!(size_t[], true)();
+    auto buffer = tbuffer(size_t[].init);
 
 	size_t srci = 0; // Source index
 	size_t consi = 0; // Consumer index
@@ -73,5 +73,7 @@ void main() //line 22
 	sw.stop();
    	writeln("finished receiving");
    	writefln("received %d messages in %d msec sum=%d speed=%d msg/msec", n, sw.peek().total!("msecs"), sum, n/sw.peek().total!("msecs"));
+
+	buffer.deinit;
 
 }
