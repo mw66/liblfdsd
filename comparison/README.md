@@ -36,4 +36,8 @@ received 1000000000 messages in 2732 msec sum=499999999500000000 speed=366032 ms
 # elembuf backed plain D sync queue
 $ make elembuf_sync_q
 received 100000000 messages in 27078 msec sum=5000000050000000 speed=3693 msg/msec
+
+# plain array loop :-)
+$ make array
+received 1000000000 messages in 1227 msec sum=499999999500000000 speed=814995 msg/msec
 ```
