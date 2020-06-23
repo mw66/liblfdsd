@@ -5,6 +5,9 @@ LDC_DFLAGS = -O4 --release --boundscheck=off
 DMD_DUB = DFLAGS="$(DMD_DFLAGS)" ${DMD}/windows/bin/dub.exe
 LDC_DUB = DFLAGS="$(LDC_DFLAGS)" ${LDC}/bin/dub
 
+array:
+	$(LDC_DUB) plain_array.d
+
 ldc1p1c:
 	$(LDC_DUB) rwqueue.d
 
@@ -24,7 +27,7 @@ dmp:
 	$(LDC_DUB) mp.d
 
 elembuf_wait_free:
-	$(LDC_DUB) build --single elembuf.d
+	$(LDC_DUB) build --single elembuf_wait_free_queue.d
 	./app
 
 elembuf_sync_q:
