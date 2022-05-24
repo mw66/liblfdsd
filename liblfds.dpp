@@ -147,9 +147,11 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
 };
 
 enum queue_bss_decl = queue_bmm_decl.replace("bmm", "bss");
+enum queue_umm_decl = queue_bmm_decl.replace("bmm", "umm");
 
 mixin(queue_bmm_decl);
 mixin(queue_bss_decl);
+mixin(queue_umm_decl);
 
 
 
@@ -253,7 +255,7 @@ void testStructQueue() {
   temp_td = queue.pop();
   assert(temp_td.name == "struct: Madge The Skutter; after push & before pop");
 
-  printf( "skutter name = %s %d\n", &(temp_td.name[0]), voidpp.sizeof );
+  printf( "skutter name = %s %lu\n", &(temp_td.name[0]), voidpp.sizeof );
 }
 
 void testClassQueue() {
@@ -275,7 +277,7 @@ void testClassQueue() {
   assert(td is temp_td);
   assert(td == temp_td);
 
-  printf( "skutter name = %s %d\n", &(temp_td.name[0]), voidpp.sizeof );
+  printf( "skutter name = %s %lu\n", &(temp_td.name[0]), voidpp.sizeof );
 }
 
 void main() {
