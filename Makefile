@@ -9,6 +9,7 @@ DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfds711
 d:
 	make clean
 	sed 's/bmm/bss/g' queue_bmm.h > queue_bss.h
+	sed 's/bmm/umm/g' queue_bmm.h > queue_umm.h
 	gcc $(CFLAGS) -c queue_bmm_bss.c
 	ar rcs liblfdsd.a queue_bmm_bss.o
 	d++ $(DPPFLAGS)  liblfds.dpp
