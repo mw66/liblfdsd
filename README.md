@@ -1,9 +1,10 @@
-# [Warning: Work-In-Progress] liblfdsd
-liblfds for d, from the portable, license-free, lock-free data structure C library (https://www.liblfds.org/)
+# liblfdsd
+liblfds for D, from the portable, license-free, lock-free data structure C library (https://www.liblfds.org/)
 
 ## Deps:
 1. https://code.dlang.org/packages/dpp
 2. https://www.liblfds.org/
+  Right now, only the following data structure are wrapped:
   * https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer) 
   * https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_single_producer,_single_consumer)
   ##### download from https://www.liblfds.org/downloads/liblfds%20release%207.1.1%20source.tar.bz2
@@ -26,6 +27,8 @@ received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/ms
 # bss queue
 received 100000000 messages in 2610 msec sum=4999999950000000 speed=38314 msg/msec
 ```
+
+Please check the `comparison` directory for a simple performance comparison with some other D's queues.
 
 ## Design: user MUST read this to use this wrapper library!
 
