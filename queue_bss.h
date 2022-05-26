@@ -48,7 +48,7 @@ INLINE void* queue_bss_pop(c_queue_bss* queue, int* ok) {
 // length
 INLINE size_t queue_bss_length(c_queue_bss* queue) {
   lfds711_pal_uint_t len;
-  lfds711_queue_bss_query(&(queue->qstate), LFDS711_QUEUE_BMM_QUERY_GET_POTENTIALLY_INACCURATE_COUNT, NULL, &len);
+  lfds711_queue_bss_query(&(queue->qstate), LFDS711_QUEUE_BSS_QUERY_GET_POTENTIALLY_INACCURATE_COUNT, NULL, &len);
   return len;
 }
 
