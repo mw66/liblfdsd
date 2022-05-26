@@ -156,7 +156,11 @@ mixin(queue_umm_decl);
 
 
 const size_t n = 100_000_000;
+/*
+alias SafeQueue = queue_umm;  // is ~6x slower than queue_bss, because each push cause one lfds711_queue_umm_element aligned_alloc
 alias SafeQueue = queue_bss;
+*/
+alias SafeQueue = queue_bmm;
 
 void threadProducer(shared(SafeQueue!int) queue) {
   ensure_lfds_valid_init_on_current_logical_core();
