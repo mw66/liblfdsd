@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "liblfds711.h"
+#include "queue_bmm_bss.h"
 
 struct test_data
 {
@@ -56,8 +57,28 @@ int use_liblfds711_h_main() {  // use raw "liblfds711.h"
   return( EXIT_SUCCESS );
 }
 
+int use_queue_umm_h_main() {  // use our wrapper "queue_umm.h"
+  int ok;
+  void* value;
+
+  c_queue_umm* queue = queue_umm_new(8);
+  for (int i = 5; i--> -5; ) {   // test both positive, and negative int
+    value = (void*)((size_t)i);  // as unsigned is ok
+    queue_umm_push(queue, value);  // make sure it's the var `value` holds the value we want to push in!
+  }
+
+  for (int i = 10; i--> 0; ) {
+    void *j = queue_umm_pop(queue, &ok);
+    printf( "pop = %d\n", (int)((size_t)j));
+  }
+  queue_umm_destroy(queue);
+
+  return( EXIT_SUCCESS );
+}
+
 int main() {
   use_liblfds711_h_main();
+  use_queue_umm_h_main();
   return( EXIT_SUCCESS );
 }
 
