@@ -4,6 +4,7 @@
 // bmm & bss queue has the same API interface:
 // https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_single_producer,_single_consumer)
 // https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer)
+// https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(unbounded,_many_producer,_many_consumer)
 
 
 #include <stdbool.h>
@@ -24,5 +25,6 @@ INLINE void ensure_lfds_valid_init_on_current_logical_core() {
 
 #include "queue_bmm.h"
 #include "queue_bss.h"
+#include "queue_umm.h"
 
 #endif//queue_bmm_bss_h
