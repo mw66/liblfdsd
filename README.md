@@ -106,3 +106,9 @@ Instead, rewrite them as:
   dSideRefHolder_toPreventGC_BeforePoped_Var = dSideWhateverStuff();
   queue.push(dSideRefHolder_toPreventGC_BeforePoped_Var);
 ```
+
+## Known issue:
+
+* the queue_umm.h will leak one lfds711_queue_umm_element upon queue_umm_destroy() call.
+
+* queue_umm is ~6x slower than queue_bss, ~4x slower than queue_bmm; because each push cause one lfds711_queue_umm_element aligned_alloc
