@@ -7,6 +7,7 @@ liblfds for D, from the portable, license-free, lock-free data structure C libra
   Right now, only the following data structure are wrapped:
   * https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_many_producer,_many_consumer) 
   * https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_single_producer,_single_consumer)
+  * https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(unbounded,_many_producer,_many_consumer)
   ##### download from https://www.liblfds.org/downloads/liblfds%20release%207.1.1%20source.tar.bz2
 
 ## Test
@@ -28,7 +29,7 @@ received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/ms
 received 100000000 messages in 2610 msec sum=4999999950000000 speed=38314 msg/msec
 ```
 
-Please check the `comparison` directory for a simple performance comparison with some other D's queues.
+Please check the `comparison` directory for a simple performance comparison with some other D queues.
 
 ## Design: user MUST read this to use this wrapper library!
 
@@ -37,6 +38,14 @@ Please check the `comparison` directory for a simple performance comparison with
 Please read the C-doc before using this D wrapper lib:
 
 https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Release_7.1.1_Documentation
+
+NOTE:
+
+liblfds7.1.1/liblfds711/inc/liblfds711/lfds711_porting_abstraction_layer_processor.h
+```
+on __x86_64__ machines
+  typedef int long long unsigned lfds711_pal_uint_t;
+```
 
 E.g.
 
@@ -69,10 +78,10 @@ Let C's be C's, and let D's be D's, i.e.
 * C manage C's memory (the container), and
 * D manage D's memory (the objects)
 
-The only thing interfacing between C and D is the simple (void*) as *value*.
+The only thing interfacing between C and D is the simple (void*) as *value*, so to use this D library:
 
-* all primitive types | class (pointers)'s *value* are stored as value of (void*)
-* all (fat) objects' *address* are stored as value of (void*)
+* all primitive types (whose .sizeof upto pointer size on the target machine) | class (pointer)'s *value* are stored as value of (void*)
+* everything else, i.e. all (fat) objects' *address* are stored as value of (void*)
 
 The only extra requirement on the D side is to keep reference to those fat objects to avoid it being GC-ed before being pop-ed.
 
