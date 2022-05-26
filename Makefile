@@ -17,15 +17,17 @@ d:
 	./liblfds
 
 
-CFLAGS = -I$(LIBLFDS)/liblfds711/inc -Ofast # -std=gnu11
+CFLAGS = -I$(LIBLFDS)/liblfds711/inc -Ofast # -g # -std=gnu11
 LDFLAGS = -L$(LIBLFDS)/liblfds711/bin -llfds711
 
 c:
 	make clean
 	gcc $(CFLAGS)  queue_bmm_test.c  $(LDFLAGS)  -o queue_bmm_test
 	gcc $(CFLAGS)  queue_bss_test.c  $(LDFLAGS)  -o queue_bss_test
+	gcc $(CFLAGS)  queue_umm_test.c  $(LDFLAGS)  -o queue_umm_test
 	./queue_bmm_test
 	./queue_bss_test
+	./queue_umm_test
 
 
 
