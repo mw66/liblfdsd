@@ -1,6 +1,8 @@
 #ifndef queue_umm_h
 #define queue_umm_h
 
+// this file is intended to be included from liblfdsd.h
+
 typedef struct {
   // https://port70.net/~nsz/c/c11/n1570.html#6.7.2.1p15
   // Within a structure object, the non-bit-field members and the units in which bit-fields reside have addresses that increase in the order in which they are declared. A pointer to a structure object, suitably converted, points to its initial member (or if that member is a bit-field, then to the unit in which it resides), and vice versa. There may be unnamed padding within a structure object, but not at its beginning.
@@ -33,21 +35,21 @@ INLINE c_queue_umm* queue_umm_new(size_t size) {
 }
 
 // only push basic type of size < size_t; or object pointer
-INLINE bool queue_umm_push(c_queue_umm* queue, void* value) {
+INLINE bool queue_umm_push(c_queue_umm* queue, container_value_t value) {
   // each time, we push, we alloc one lfds711_queue_umm_element
   // TODO: add a default to NULL lfds711_queue_umm_element pointer, to use the pre-allocate lfds711_queue_umm_element when available?
   struct lfds711_queue_umm_element* qe = aligned_alloc(LFDS711_PAL_ATOMIC_ISOLATION_IN_BYTES, sizeof(struct lfds711_queue_umm_element));
   // printf("allc: %p\n", (void*)qe);
   if (qe) {
-    LFDS711_QUEUE_UMM_SET_VALUE_IN_ELEMENT((*qe), value);  // the macro takes A pointer, which will be cast by the macro to a void *, which the value in queue_element is set to.
+    LFDS711_QUEUE_UMM_SET_VALUE_IN_ELEMENT((*qe), (void*)value);  // the macro takes A pointer, which will be cast by the macro to a void *, which the value in queue_element is set to.
     lfds711_queue_umm_enqueue(&(queue->qstate), qe);
     return true;  // unbounded queue, always successful
   }
   return false;
 }
 
-// return element, if ok is true; otherwise NULL
-INLINE void* queue_umm_pop(c_queue_umm* queue, int* ok) {
+// return the element, if ok is true; otherwise 0
+INLINE container_value_t queue_umm_pop(c_queue_umm* queue, int* ok) {
   struct lfds711_queue_umm_element *qe = NULL;
   void* value = NULL;
   *ok = lfds711_queue_umm_dequeue(&(queue->qstate), &qe);
@@ -55,9 +57,9 @@ INLINE void* queue_umm_pop(c_queue_umm* queue, int* ok) {
     value = LFDS711_QUEUE_UMM_GET_VALUE_FROM_ELEMENT(*qe);  // the macro Returns a void pointer, the value from the element.
     // printf("free: %p\n", (void*)qe);
     free(qe);  // after get the value; whenever we pop, free the alloc-ed lfds711_queue_umm_element, ref:queue_umm_push
-    return value;
+    return (container_value_t)value;
   }
-  return NULL;
+  return 0;
 }
 
 

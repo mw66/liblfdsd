@@ -1,6 +1,8 @@
 #ifndef queue_bss_h
 #define queue_bss_h
 
+// this file is intended to be included from liblfdsd.h
+
 typedef struct {
   // https://port70.net/~nsz/c/c11/n1570.html#6.7.2.1p15
   // Within a structure object, the non-bit-field members and the units in which bit-fields reside have addresses that increase in the order in which they are declared. A pointer to a structure object, suitably converted, points to its initial member (or if that member is a bit-field, then to the unit in which it resides), and vice versa. There may be unnamed padding within a structure object, but not at its beginning.
@@ -29,19 +31,19 @@ INLINE c_queue_bss* queue_bss_new(size_t size) {
 }
 
 // only push basic type of size < size_t; or object pointer
-INLINE bool queue_bss_push(c_queue_bss* queue, void* value) {
-  int r = lfds711_queue_bss_enqueue(&(queue->qstate), NULL, value);
+INLINE bool queue_bss_push(c_queue_bss* queue, container_value_t value) {
+  int r = lfds711_queue_bss_enqueue(&(queue->qstate), NULL, (void*)value);
   return r;  // 0 when full
 }
 
-// return element, if ok is true; otherwise NULL
-INLINE void* queue_bss_pop(c_queue_bss* queue, int* ok) {
+// return the element, if ok is true; otherwise 0
+INLINE container_value_t queue_bss_pop(c_queue_bss* queue, int* ok) {
   void* value = NULL;
   *ok = lfds711_queue_bss_dequeue(&(queue->qstate), NULL, &value);
   if (*ok) {
-    return value;
+    return (container_value_t)value;
   }
-  return NULL;
+  return 0;
 }
 
 
