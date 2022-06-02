@@ -2,20 +2,24 @@
 LIBLFDS = ./liblfds7.1.1
 
 DPPFLAGS = --preprocess-only --hard-fail --include-path=$(LIBLFDS)/liblfds711/inc --keep-d-files --compiler=ldmd2 #dmd #ldc2 #
-LDC2_FLAGS = -O4 --release --boundscheck=off
 LDC2_FLAGS = -debug #-d
+LDC2_FLAGS = -O4 --release --boundscheck=off
 DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfds711
 
-d:
+gen:
 	make clean
 	sed 's/bmm/bss/g;s/BMM/BSS/g' queue_bmm.h > queue_bss.h
-	# sed 's/bmm/umm/g' queue_bmm.h > queue_umm.h  # one time run, then need manual edit
-	gcc $(CFLAGS) -c queue_bmm_bss.c
-	ar rcs liblfdsd.a queue_bmm_bss.o
-	d++ $(DPPFLAGS)  liblfds.dpp
-	ldmd2 -unittest -version=LIBLFDS_TEST liblfds.d $(LDC2_FLAGS) -L$(DMDLIB)
-	./liblfds
+	# echo sed 's/bmm/umm/g' queue_bmm.h > queue_umm.h  # one time run, then need manual edit
+	gcc $(CFLAGS) -c liblfdsd.c
+	ar rcs liblfdsd.a liblfdsd.o
+	d++ $(DPPFLAGS)  liblfdsd.dpp
+	mv -f liblfdsd.d source/
 
+test:
+	ldmd2 -unittest -version=LIBLFDS_TEST liblfdsd.d $(LDC2_FLAGS) -L$(DMDLIB)
+	./liblfdsd
+
+liblfdsd.d: liblfdsd.h
 
 CFLAGS = -I$(LIBLFDS)/liblfds711/inc -Ofast # -g # -std=gnu11
 LDFLAGS = -L$(LIBLFDS)/liblfds711/bin -llfds711
@@ -33,3 +37,4 @@ c:
 
 clean:
 	$(RM) *.o *.a
+	dub clean
