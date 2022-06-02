@@ -1,0 +1,17 @@
+{
+	"name": "liblfdsd",
+	"targetType": "staticLibrary",
+	"description": "liblfds for D, from the portable, license-free, lock-free data structure C library (https://www.liblfds.org/).",
+	"authors": ["mw66"],
+	"homepage": "https://github.com/mw66/liblfdsd",
+	"license": "BSL-1.0 license",
+	"dependencies": {
+	},
+	"preBuildCommands": [
+		"make clean; make gen"
+	],
+	"lflags-linux": [
+		"-L$PACKAGE_DIR",
+		"-lliblfdsd"
+	]
+}
