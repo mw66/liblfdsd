@@ -81,7 +81,7 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   // we *always* want to pass by ref, the value should never be copied
   bool push(T)(ref T value) {
    static if(treatAsStructInC!T) {
-    void* v = cast(void*)(&value);
+    container_value_t v = cast(container_value_t)(&value);
     /* we can NOT do this! this same object could be in multiple such C-containers
     ref:do_NOT_GC.removeRoot
     // https://dlang.org/phobos/core_memory.html#addRoot
@@ -89,7 +89,7 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
     GC.setAttr(v, GC.BlkAttr.NO_MOVE);
     */
    } else {
-    void* v = cast(void*)value;
+    container_value_t v = cast(container_value_t)(cast(void*)value);
    }
     return queue_bmm_push(cast(c_queue_bmm*)_queue, v);
   }
@@ -99,9 +99,9 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   // Returns 1 on a successful dequeue. Returns 0 if dequeing failed. Dequeuing only fails if the queue is empty.
   PopT pop() {
     int ok;
-    void* value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
+    container_value_t value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
     if (ok) {
-      PopT result = cast(PopT)value;
+      PopT result = cast(PopT)(cast(void*)value);
       static if(treatAsStructInC!T) {
         /* we can NOT do this! this same object could be in multiple such C-containers;
            we can NOT put it back to GC, just because it's popped from this queue

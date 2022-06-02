@@ -298,18 +298,6 @@ extern(C)
     alias __uintmax_t = c_ulong;
 
     alias __intmax_t = c_long;
-
-    alias __u_quad_t = c_ulong;
-
-    alias __quad_t = c_long;
-
-    alias __uint_least64_t = c_ulong;
-
-    alias __int_least64_t = c_long;
-
-    alias __uint_least32_t = uint;
-
-    alias __int_least32_t = int;
     /***** enums *****/
     enum lfds711_btree_au_absolute_position
     {
@@ -426,17 +414,15 @@ extern(C)
 
     pragma(mangle, "lfds711_btree_au_query") void lfds711_btree_au_query_(lfds711_btree_au_state*, lfds711_btree_au_query, void*, void*) @nogc nothrow;
 
-    alias __uint_least16_t = ushort;
+    alias __u_quad_t = c_ulong;
 
-    alias __int_least16_t = short;
+    alias __quad_t = c_long;
 
-    alias __uint_least8_t = ubyte;
+    alias __uint_least64_t = c_ulong;
 
-    alias __int_least8_t = byte;
+    alias __int_least64_t = c_long;
 
-    alias __uint64_t = c_ulong;
-
-    alias __int64_t = c_long;
+    alias __uint_least32_t = uint;
     /***** enums *****/
     enum lfds711_freelist_query
     {
@@ -487,15 +473,17 @@ extern(C)
 
     pragma(mangle, "lfds711_freelist_query") void lfds711_freelist_query_(lfds711_freelist_state*, lfds711_freelist_query, void*, void*) @nogc nothrow;
 
-    alias __uint32_t = uint;
+    alias __int_least32_t = int;
 
-    alias __int32_t = int;
+    alias __uint_least16_t = ushort;
 
-    alias __uint16_t = ushort;
+    alias __int_least16_t = short;
 
-    alias __int16_t = short;
+    alias __uint_least8_t = ubyte;
 
-    alias __uint8_t = ubyte;
+    alias __int_least8_t = byte;
+
+    alias __uint64_t = c_ulong;
     /***** enums *****/
     enum lfds711_hash_a_existing_key
     {
@@ -582,15 +570,19 @@ extern(C)
 
     pragma(mangle, "lfds711_hash_a_query") void lfds711_hash_a_query_(lfds711_hash_a_state*, lfds711_hash_a_query, void*, void*) @nogc nothrow;
 
+    alias __int64_t = c_long;
+
+    alias __uint32_t = uint;
+
+    alias __int32_t = int;
+
+    alias __uint16_t = ushort;
+
+    alias __int16_t = short;
+
+    alias __uint8_t = ubyte;
+
     alias __int8_t = byte;
-
-    alias __u_long = c_ulong;
-
-    alias __u_int = uint;
-
-    alias __u_short = ushort;
-
-    alias __u_char = ubyte;
     /***** enums *****/
     enum lfds711_list_aso_existing_key
     {
@@ -661,15 +653,13 @@ extern(C)
 
     pragma(mangle, "lfds711_list_aso_query") void lfds711_list_aso_query_(lfds711_list_aso_state*, lfds711_list_aso_query, void*, void*) @nogc nothrow;
 
-    struct __once_flag
-    {
+    alias __u_long = c_ulong;
 
-        int __data;
-    }
+    alias __u_int = uint;
 
-    alias __thrd_t = c_ulong;
+    alias __u_short = ushort;
 
-    alias __tss_t = uint;
+    alias __u_char = ubyte;
     /***** enums *****/
     enum lfds711_list_asu_position
     {
@@ -737,6 +727,16 @@ extern(C)
     int lfds711_list_asu_get_by_key(lfds711_list_asu_state*, int function(const(void)*, const(void)*), void*, lfds711_list_asu_element**) @nogc nothrow;
 
     pragma(mangle, "lfds711_list_asu_query") void lfds711_list_asu_query_(lfds711_list_asu_state*, lfds711_list_asu_query, void*, void*) @nogc nothrow;
+
+    struct __once_flag
+    {
+
+        int __data;
+    }
+
+    alias __thrd_t = c_ulong;
+
+    alias __tss_t = uint;
 
     struct __pthread_cond_s
     {
@@ -811,56 +811,6 @@ extern(C)
     }
 
     alias __pthread_list_t = __pthread_internal_list;
-
-    struct __pthread_rwlock_arch_t
-    {
-
-        uint __readers;
-
-        uint __writers;
-
-        uint __wrphase_futex;
-
-        uint __writers_futex;
-
-        uint __pad3;
-
-        uint __pad4;
-
-        int __cur_writer;
-
-        int __shared;
-
-        byte __rwelision;
-
-        ubyte[7] __pad1;
-
-        c_ulong __pad2;
-
-        uint __flags;
-    }
-
-    struct __pthread_mutex_s
-    {
-
-        int __lock;
-
-        uint __count;
-
-        int __owner;
-
-        uint __nusers;
-
-        int __kind;
-
-        short __spins;
-
-        short __elision;
-
-        __pthread_internal_list __list;
-    }
-
-    alias int64_t = c_long;
     /***** enums *****/
     enum lfds711_misc_cas_strength
     {
@@ -989,13 +939,71 @@ extern(C)
 
     pragma(mangle, "lfds711_misc_query") void lfds711_misc_query_(lfds711_misc_query, void*, void*) @nogc nothrow;
 
+    struct __pthread_rwlock_arch_t
+    {
+
+        uint __readers;
+
+        uint __writers;
+
+        uint __wrphase_futex;
+
+        uint __writers_futex;
+
+        uint __pad3;
+
+        uint __pad4;
+
+        int __cur_writer;
+
+        int __shared;
+
+        byte __rwelision;
+
+        ubyte[7] __pad1;
+
+        c_ulong __pad2;
+
+        uint __flags;
+    }
+
+    struct __pthread_mutex_s
+    {
+
+        int __lock;
+
+        uint __count;
+
+        int __owner;
+
+        uint __nusers;
+
+        int __kind;
+
+        short __spins;
+
+        short __elision;
+
+        __pthread_internal_list __list;
+    }
+
+    static void lfds711_pal_barrier_compiler() @nogc nothrow;
+
+    alias uint64_t = ulong;
+
+    alias uint32_t = uint;
+
+    alias uint16_t = ushort;
+
+    alias uint8_t = ubyte;
+
+    alias int64_t = c_long;
+
     alias int32_t = int;
 
     alias int16_t = short;
 
     alias int8_t = byte;
-
-    static void lfds711_pal_barrier_compiler() @nogc nothrow;
 
     union pthread_barrierattr_t
     {
@@ -1004,6 +1012,10 @@ extern(C)
 
         int __align;
     }
+
+    alias lfds711_pal_int_t = long;
+
+    alias lfds711_pal_uint_t = ulong;
 
     union pthread_barrier_t
     {
@@ -1033,10 +1045,6 @@ extern(C)
         c_long __align;
     }
 
-    alias lfds711_pal_int_t = long;
-
-    alias lfds711_pal_uint_t = ulong;
-
     union pthread_cond_t
     {
 
@@ -1045,36 +1053,6 @@ extern(C)
         char[48] __size;
 
         long __align;
-    }
-
-    union pthread_mutex_t
-    {
-
-        __pthread_mutex_s __data;
-
-        char[40] __size;
-
-        c_long __align;
-    }
-
-    union pthread_attr_t
-    {
-
-        char[56] __size;
-
-        c_long __align;
-    }
-
-    alias pthread_once_t = int;
-
-    alias pthread_key_t = uint;
-
-    union pthread_condattr_t
-    {
-
-        char[4] __size;
-
-        int __align;
     }
     /***** structs *****/
     struct lfds711_prng_state
@@ -1187,15 +1165,23 @@ extern(C)
 
     pragma(mangle, "lfds711_queue_bss_query") void lfds711_queue_bss_query_(lfds711_queue_bss_state*, lfds711_queue_bss_query, void*, void*) @nogc nothrow;
 
-    union pthread_mutexattr_t
+    union pthread_mutex_t
     {
 
-        char[4] __size;
+        __pthread_mutex_s __data;
 
-        int __align;
+        char[40] __size;
+
+        c_long __align;
     }
 
-    alias pthread_t = c_ulong;
+    union pthread_attr_t
+    {
+
+        char[56] __size;
+
+        c_long __align;
+    }
     /***** enums *****/
     enum lfds711_queue_umm_query
     {
@@ -1242,6 +1228,8 @@ extern(C)
     int lfds711_queue_umm_dequeue(lfds711_queue_umm_state*, lfds711_queue_umm_element**) @nogc nothrow;
 
     pragma(mangle, "lfds711_queue_umm_query") void lfds711_queue_umm_query_(lfds711_queue_umm_state*, lfds711_queue_umm_query, void*, void*) @nogc nothrow;
+
+    alias pthread_once_t = int;
     /***** enums *****/
     enum lfds711_ringbuffer_query
     {
@@ -1288,6 +1276,16 @@ extern(C)
     void lfds711_ringbuffer_write(lfds711_ringbuffer_state*, void*, void*, lfds711_misc_flag*, void**, void**) @nogc nothrow;
 
     pragma(mangle, "lfds711_ringbuffer_query") void lfds711_ringbuffer_query_(lfds711_ringbuffer_state*, lfds711_ringbuffer_query, void*, void*) @nogc nothrow;
+
+    alias pthread_key_t = uint;
+
+    union pthread_condattr_t
+    {
+
+        char[4] __size;
+
+        int __align;
+    }
     /***** enums *****/
     enum lfds711_stack_query
     {
@@ -1331,9 +1329,21 @@ extern(C)
 
     pragma(mangle, "lfds711_stack_query") void lfds711_stack_query_(lfds711_stack_state*, lfds711_stack_query, void*, void*) @nogc nothrow;
 
+    alias container_value_t = c_ulong;
+
+    union pthread_mutexattr_t
+    {
+
+        char[4] __size;
+
+        int __align;
+    }
+
     bool is_power_of_two(c_ulong) @nogc nothrow;
 
     void ensure_lfds_valid_init_on_current_logical_core() @nogc nothrow;
+
+    alias pthread_t = c_ulong;
 
     struct c_queue_bmm
     {
@@ -1349,9 +1359,9 @@ extern(C)
 
     c_queue_bmm* queue_bmm_new(c_ulong) @nogc nothrow;
 
-    bool queue_bmm_push(c_queue_bmm*, void*) @nogc nothrow;
+    bool queue_bmm_push(c_queue_bmm*, c_ulong) @nogc nothrow;
 
-    void* queue_bmm_pop(c_queue_bmm*, int*) @nogc nothrow;
+    c_ulong queue_bmm_pop(c_queue_bmm*, int*) @nogc nothrow;
 
     c_ulong queue_bmm_length(c_queue_bmm*) @nogc nothrow;
 
@@ -1371,9 +1381,9 @@ extern(C)
 
     c_queue_bss* queue_bss_new(c_ulong) @nogc nothrow;
 
-    bool queue_bss_push(c_queue_bss*, void*) @nogc nothrow;
+    bool queue_bss_push(c_queue_bss*, c_ulong) @nogc nothrow;
 
-    void* queue_bss_pop(c_queue_bss*, int*) @nogc nothrow;
+    c_ulong queue_bss_pop(c_queue_bss*, int*) @nogc nothrow;
 
     c_ulong queue_bss_length(c_queue_bss*) @nogc nothrow;
 
@@ -1393,9 +1403,9 @@ extern(C)
 
     c_queue_umm* queue_umm_new(c_ulong) @nogc nothrow;
 
-    bool queue_umm_push(c_queue_umm*, void*) @nogc nothrow;
+    bool queue_umm_push(c_queue_umm*, c_ulong) @nogc nothrow;
 
-    void* queue_umm_pop(c_queue_umm*, int*) @nogc nothrow;
+    c_ulong queue_umm_pop(c_queue_umm*, int*) @nogc nothrow;
 
     c_ulong queue_umm_length(c_queue_umm*) @nogc nothrow;
 
@@ -1411,11 +1421,75 @@ extern(C)
 
     alias _Float32 = float;
 
+    alias int_least8_t = byte;
+
+    alias int_least16_t = short;
+
+    alias int_least32_t = int;
+
+    alias int_least64_t = c_long;
+
+    alias uint_least8_t = ubyte;
+
+    alias uint_least16_t = ushort;
+
+    alias uint_least32_t = uint;
+
+    alias uint_least64_t = c_ulong;
+
+    alias int_fast8_t = byte;
+
+    alias int_fast16_t = c_long;
+
+    alias int_fast32_t = c_long;
+
+    alias int_fast64_t = c_long;
+
+    alias uint_fast8_t = ubyte;
+
+    alias uint_fast16_t = c_ulong;
+
+    alias uint_fast32_t = c_ulong;
+
+    alias uint_fast64_t = c_ulong;
+
+    alias intptr_t = c_long;
+
+    alias uintptr_t = c_ulong;
+
+    alias intmax_t = c_long;
+
+    alias uintmax_t = c_ulong;
+
     static c_ulong __bswap_64(c_ulong) @nogc nothrow;
 
     static uint __bswap_32(uint) @nogc nothrow;
 
     static ushort __bswap_16(ushort) @nogc nothrow;
+
+    int getloadavg(double*, int) @nogc nothrow;
+
+    int getsubopt(char**, char**, char**) @nogc nothrow;
+
+    int rpmatch(const(char)*) @nogc nothrow;
+
+    c_ulong wcstombs(char*, const(int)*, c_ulong) @nogc nothrow;
+
+    c_ulong mbstowcs(int*, const(char)*, c_ulong) @nogc nothrow;
+
+    int wctomb(char*, int) @nogc nothrow;
+
+    int mbtowc(int*, const(char)*, c_ulong) @nogc nothrow;
+
+    int mblen(const(char)*, c_ulong) @nogc nothrow;
+
+    int qfcvt_r(real, int, int*, int*, char*, c_ulong) @nogc nothrow;
+
+    int qecvt_r(real, int, int*, int*, char*, c_ulong) @nogc nothrow;
+
+    int fcvt_r(double, int, int*, int*, char*, c_ulong) @nogc nothrow;
+
+    int ecvt_r(double, int, int*, int*, char*, c_ulong) @nogc nothrow;
 
     struct div_t
     {
@@ -1440,6 +1514,10 @@ extern(C)
 
         long rem;
     }
+
+    char* qgcvt(real, int, char*) @nogc nothrow;
+
+    char* qfcvt(real, int, int*, int*) @nogc nothrow;
 
     c_ulong __ctype_get_mb_cur_max() @nogc nothrow;
 
@@ -1640,34 +1718,6 @@ extern(C)
 
     char* qecvt(real, int, int*, int*) @nogc nothrow;
 
-    char* qfcvt(real, int, int*, int*) @nogc nothrow;
-
-    char* qgcvt(real, int, char*) @nogc nothrow;
-
-    int ecvt_r(double, int, int*, int*, char*, c_ulong) @nogc nothrow;
-
-    int fcvt_r(double, int, int*, int*, char*, c_ulong) @nogc nothrow;
-
-    int qecvt_r(real, int, int*, int*, char*, c_ulong) @nogc nothrow;
-
-    int qfcvt_r(real, int, int*, int*, char*, c_ulong) @nogc nothrow;
-
-    int mblen(const(char)*, c_ulong) @nogc nothrow;
-
-    int mbtowc(int*, const(char)*, c_ulong) @nogc nothrow;
-
-    int wctomb(char*, int) @nogc nothrow;
-
-    c_ulong mbstowcs(int*, const(char)*, c_ulong) @nogc nothrow;
-
-    c_ulong wcstombs(char*, const(int)*, c_ulong) @nogc nothrow;
-
-    int rpmatch(const(char)*) @nogc nothrow;
-
-    int getsubopt(char**, char**, char**) @nogc nothrow;
-
-    int getloadavg(double*, int) @nogc nothrow;
-
 
 
 
@@ -1728,8 +1778,278 @@ extern(C)
             mixin(enumMixinStr___ldiv_t_defined);
         }
     }
+    static if(!is(typeof(_STDLIB_H))) {
+        private enum enumMixinStr__STDLIB_H = `enum _STDLIB_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__STDLIB_H); }))) {
+            mixin(enumMixinStr__STDLIB_H);
+        }
+    }
+    static if(!is(typeof(WINT_MAX))) {
+        private enum enumMixinStr_WINT_MAX = `enum WINT_MAX = ( 4294967295u );`;
+        static if(is(typeof({ mixin(enumMixinStr_WINT_MAX); }))) {
+            mixin(enumMixinStr_WINT_MAX);
+        }
+    }
 
 
+
+
+    static if(!is(typeof(WINT_MIN))) {
+        private enum enumMixinStr_WINT_MIN = `enum WINT_MIN = ( 0u );`;
+        static if(is(typeof({ mixin(enumMixinStr_WINT_MIN); }))) {
+            mixin(enumMixinStr_WINT_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(WCHAR_MAX))) {
+        private enum enumMixinStr_WCHAR_MAX = `enum WCHAR_MAX = __WCHAR_MAX;`;
+        static if(is(typeof({ mixin(enumMixinStr_WCHAR_MAX); }))) {
+            mixin(enumMixinStr_WCHAR_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(WCHAR_MIN))) {
+        private enum enumMixinStr_WCHAR_MIN = `enum WCHAR_MIN = __WCHAR_MIN;`;
+        static if(is(typeof({ mixin(enumMixinStr_WCHAR_MIN); }))) {
+            mixin(enumMixinStr_WCHAR_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(SIZE_MAX))) {
+        private enum enumMixinStr_SIZE_MAX = `enum SIZE_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_SIZE_MAX); }))) {
+            mixin(enumMixinStr_SIZE_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(SIG_ATOMIC_MAX))) {
+        private enum enumMixinStr_SIG_ATOMIC_MAX = `enum SIG_ATOMIC_MAX = ( 2147483647 );`;
+        static if(is(typeof({ mixin(enumMixinStr_SIG_ATOMIC_MAX); }))) {
+            mixin(enumMixinStr_SIG_ATOMIC_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(SIG_ATOMIC_MIN))) {
+        private enum enumMixinStr_SIG_ATOMIC_MIN = `enum SIG_ATOMIC_MIN = ( - 2147483647 - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_SIG_ATOMIC_MIN); }))) {
+            mixin(enumMixinStr_SIG_ATOMIC_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(PTRDIFF_MAX))) {
+        private enum enumMixinStr_PTRDIFF_MAX = `enum PTRDIFF_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_PTRDIFF_MAX); }))) {
+            mixin(enumMixinStr_PTRDIFF_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(PTRDIFF_MIN))) {
+        private enum enumMixinStr_PTRDIFF_MIN = `enum PTRDIFF_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_PTRDIFF_MIN); }))) {
+            mixin(enumMixinStr_PTRDIFF_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINTMAX_MAX))) {
+        private enum enumMixinStr_UINTMAX_MAX = `enum UINTMAX_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINTMAX_MAX); }))) {
+            mixin(enumMixinStr_UINTMAX_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INTMAX_MAX))) {
+        private enum enumMixinStr_INTMAX_MAX = `enum INTMAX_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_INTMAX_MAX); }))) {
+            mixin(enumMixinStr_INTMAX_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INTMAX_MIN))) {
+        private enum enumMixinStr_INTMAX_MIN = `enum INTMAX_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INTMAX_MIN); }))) {
+            mixin(enumMixinStr_INTMAX_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINTPTR_MAX))) {
+        private enum enumMixinStr_UINTPTR_MAX = `enum UINTPTR_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINTPTR_MAX); }))) {
+            mixin(enumMixinStr_UINTPTR_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INTPTR_MAX))) {
+        private enum enumMixinStr_INTPTR_MAX = `enum INTPTR_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_INTPTR_MAX); }))) {
+            mixin(enumMixinStr_INTPTR_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INTPTR_MIN))) {
+        private enum enumMixinStr_INTPTR_MIN = `enum INTPTR_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INTPTR_MIN); }))) {
+            mixin(enumMixinStr_INTPTR_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINT_FAST64_MAX))) {
+        private enum enumMixinStr_UINT_FAST64_MAX = `enum UINT_FAST64_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_FAST64_MAX); }))) {
+            mixin(enumMixinStr_UINT_FAST64_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINT_FAST32_MAX))) {
+        private enum enumMixinStr_UINT_FAST32_MAX = `enum UINT_FAST32_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_FAST32_MAX); }))) {
+            mixin(enumMixinStr_UINT_FAST32_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINT_FAST16_MAX))) {
+        private enum enumMixinStr_UINT_FAST16_MAX = `enum UINT_FAST16_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_FAST16_MAX); }))) {
+            mixin(enumMixinStr_UINT_FAST16_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINT_FAST8_MAX))) {
+        private enum enumMixinStr_UINT_FAST8_MAX = `enum UINT_FAST8_MAX = ( 255 );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_FAST8_MAX); }))) {
+            mixin(enumMixinStr_UINT_FAST8_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST64_MAX))) {
+        private enum enumMixinStr_INT_FAST64_MAX = `enum INT_FAST64_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST64_MAX); }))) {
+            mixin(enumMixinStr_INT_FAST64_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST32_MAX))) {
+        private enum enumMixinStr_INT_FAST32_MAX = `enum INT_FAST32_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST32_MAX); }))) {
+            mixin(enumMixinStr_INT_FAST32_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST16_MAX))) {
+        private enum enumMixinStr_INT_FAST16_MAX = `enum INT_FAST16_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST16_MAX); }))) {
+            mixin(enumMixinStr_INT_FAST16_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST8_MAX))) {
+        private enum enumMixinStr_INT_FAST8_MAX = `enum INT_FAST8_MAX = ( 127 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST8_MAX); }))) {
+            mixin(enumMixinStr_INT_FAST8_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST64_MIN))) {
+        private enum enumMixinStr_INT_FAST64_MIN = `enum INT_FAST64_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST64_MIN); }))) {
+            mixin(enumMixinStr_INT_FAST64_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST32_MIN))) {
+        private enum enumMixinStr_INT_FAST32_MIN = `enum INT_FAST32_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST32_MIN); }))) {
+            mixin(enumMixinStr_INT_FAST32_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST16_MIN))) {
+        private enum enumMixinStr_INT_FAST16_MIN = `enum INT_FAST16_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST16_MIN); }))) {
+            mixin(enumMixinStr_INT_FAST16_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_FAST8_MIN))) {
+        private enum enumMixinStr_INT_FAST8_MIN = `enum INT_FAST8_MIN = ( - 128 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_FAST8_MIN); }))) {
+            mixin(enumMixinStr_INT_FAST8_MIN);
+        }
+    }
 
 
 
@@ -1740,12 +2060,126 @@ extern(C)
             mixin(enumMixinStr__BITS_BYTESWAP_H);
         }
     }
-    static if(!is(typeof(_STDLIB_H))) {
-        private enum enumMixinStr__STDLIB_H = `enum _STDLIB_H = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr__STDLIB_H); }))) {
-            mixin(enumMixinStr__STDLIB_H);
+
+
+
+
+    static if(!is(typeof(UINT_LEAST64_MAX))) {
+        private enum enumMixinStr_UINT_LEAST64_MAX = `enum UINT_LEAST64_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_LEAST64_MAX); }))) {
+            mixin(enumMixinStr_UINT_LEAST64_MAX);
         }
     }
+
+
+
+
+    static if(!is(typeof(UINT_LEAST32_MAX))) {
+        private enum enumMixinStr_UINT_LEAST32_MAX = `enum UINT_LEAST32_MAX = ( 4294967295U );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_LEAST32_MAX); }))) {
+            mixin(enumMixinStr_UINT_LEAST32_MAX);
+        }
+    }
+
+
+
+
+
+
+    static if(!is(typeof(UINT_LEAST16_MAX))) {
+        private enum enumMixinStr_UINT_LEAST16_MAX = `enum UINT_LEAST16_MAX = ( 65535 );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_LEAST16_MAX); }))) {
+            mixin(enumMixinStr_UINT_LEAST16_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINT_LEAST8_MAX))) {
+        private enum enumMixinStr_UINT_LEAST8_MAX = `enum UINT_LEAST8_MAX = ( 255 );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT_LEAST8_MAX); }))) {
+            mixin(enumMixinStr_UINT_LEAST8_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_LEAST64_MAX))) {
+        private enum enumMixinStr_INT_LEAST64_MAX = `enum INT_LEAST64_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST64_MAX); }))) {
+            mixin(enumMixinStr_INT_LEAST64_MAX);
+        }
+    }
+
+
+
+
+
+
+    static if(!is(typeof(INT_LEAST32_MAX))) {
+        private enum enumMixinStr_INT_LEAST32_MAX = `enum INT_LEAST32_MAX = ( 2147483647 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST32_MAX); }))) {
+            mixin(enumMixinStr_INT_LEAST32_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_LEAST16_MAX))) {
+        private enum enumMixinStr_INT_LEAST16_MAX = `enum INT_LEAST16_MAX = ( 32767 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST16_MAX); }))) {
+            mixin(enumMixinStr_INT_LEAST16_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_LEAST8_MAX))) {
+        private enum enumMixinStr_INT_LEAST8_MAX = `enum INT_LEAST8_MAX = ( 127 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST8_MAX); }))) {
+            mixin(enumMixinStr_INT_LEAST8_MAX);
+        }
+    }
+
+
+
+
+
+
+    static if(!is(typeof(INT_LEAST64_MIN))) {
+        private enum enumMixinStr_INT_LEAST64_MIN = `enum INT_LEAST64_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST64_MIN); }))) {
+            mixin(enumMixinStr_INT_LEAST64_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_LEAST32_MIN))) {
+        private enum enumMixinStr_INT_LEAST32_MIN = `enum INT_LEAST32_MIN = ( - 2147483647 - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST32_MIN); }))) {
+            mixin(enumMixinStr_INT_LEAST32_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT_LEAST16_MIN))) {
+        private enum enumMixinStr_INT_LEAST16_MIN = `enum INT_LEAST16_MIN = ( - 32767 - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST16_MIN); }))) {
+            mixin(enumMixinStr_INT_LEAST16_MIN);
+        }
+    }
+
+
+
+
     static if(!is(typeof(_BITS_ENDIAN_H))) {
         private enum enumMixinStr__BITS_ENDIAN_H = `enum _BITS_ENDIAN_H = 1;`;
         static if(is(typeof({ mixin(enumMixinStr__BITS_ENDIAN_H); }))) {
@@ -1786,10 +2220,40 @@ extern(C)
 
 
 
+    static if(!is(typeof(INT_LEAST8_MIN))) {
+        private enum enumMixinStr_INT_LEAST8_MIN = `enum INT_LEAST8_MIN = ( - 128 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT_LEAST8_MIN); }))) {
+            mixin(enumMixinStr_INT_LEAST8_MIN);
+        }
+    }
+
+
+
+
     static if(!is(typeof(__FLOAT_WORD_ORDER))) {
         private enum enumMixinStr___FLOAT_WORD_ORDER = `enum __FLOAT_WORD_ORDER = __BYTE_ORDER;`;
         static if(is(typeof({ mixin(enumMixinStr___FLOAT_WORD_ORDER); }))) {
             mixin(enumMixinStr___FLOAT_WORD_ORDER);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINT64_MAX))) {
+        private enum enumMixinStr_UINT64_MAX = `enum UINT64_MAX = ( 18446744073709551615UL );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT64_MAX); }))) {
+            mixin(enumMixinStr_UINT64_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(UINT32_MAX))) {
+        private enum enumMixinStr_UINT32_MAX = `enum UINT32_MAX = ( 4294967295U );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT32_MAX); }))) {
+            mixin(enumMixinStr_UINT32_MAX);
         }
     }
 
@@ -1808,10 +2272,10 @@ extern(C)
 
 
 
-    static if(!is(typeof(_STDC_PREDEF_H))) {
-        private enum enumMixinStr__STDC_PREDEF_H = `enum _STDC_PREDEF_H = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr__STDC_PREDEF_H); }))) {
-            mixin(enumMixinStr__STDC_PREDEF_H);
+    static if(!is(typeof(UINT16_MAX))) {
+        private enum enumMixinStr_UINT16_MAX = `enum UINT16_MAX = ( 65535 );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT16_MAX); }))) {
+            mixin(enumMixinStr_UINT16_MAX);
         }
     }
 
@@ -1824,10 +2288,26 @@ extern(C)
             mixin(enumMixinStr___BYTE_ORDER);
         }
     }
-    static if(!is(typeof(__GLIBC_MINOR__))) {
-        private enum enumMixinStr___GLIBC_MINOR__ = `enum __GLIBC_MINOR__ = 33;`;
-        static if(is(typeof({ mixin(enumMixinStr___GLIBC_MINOR__); }))) {
-            mixin(enumMixinStr___GLIBC_MINOR__);
+
+
+
+
+
+
+    static if(!is(typeof(UINT8_MAX))) {
+        private enum enumMixinStr_UINT8_MAX = `enum UINT8_MAX = ( 255 );`;
+        static if(is(typeof({ mixin(enumMixinStr_UINT8_MAX); }))) {
+            mixin(enumMixinStr_UINT8_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT64_MAX))) {
+        private enum enumMixinStr_INT64_MAX = `enum INT64_MAX = ( 9223372036854775807L );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT64_MAX); }))) {
+            mixin(enumMixinStr_INT64_MAX);
         }
     }
 
@@ -1954,10 +2434,10 @@ extern(C)
 
 
 
-    static if(!is(typeof(__GLIBC__))) {
-        private enum enumMixinStr___GLIBC__ = `enum __GLIBC__ = 2;`;
-        static if(is(typeof({ mixin(enumMixinStr___GLIBC__); }))) {
-            mixin(enumMixinStr___GLIBC__);
+    static if(!is(typeof(INT32_MAX))) {
+        private enum enumMixinStr_INT32_MAX = `enum INT32_MAX = ( 2147483647 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT32_MAX); }))) {
+            mixin(enumMixinStr_INT32_MAX);
         }
     }
 
@@ -1968,6 +2448,138 @@ extern(C)
         private enum enumMixinStr___HAVE_FLOATN_NOT_TYPEDEF = `enum __HAVE_FLOATN_NOT_TYPEDEF = 0;`;
         static if(is(typeof({ mixin(enumMixinStr___HAVE_FLOATN_NOT_TYPEDEF); }))) {
             mixin(enumMixinStr___HAVE_FLOATN_NOT_TYPEDEF);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT16_MAX))) {
+        private enum enumMixinStr_INT16_MAX = `enum INT16_MAX = ( 32767 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT16_MAX); }))) {
+            mixin(enumMixinStr_INT16_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT8_MAX))) {
+        private enum enumMixinStr_INT8_MAX = `enum INT8_MAX = ( 127 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT8_MAX); }))) {
+            mixin(enumMixinStr_INT8_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT64_MIN))) {
+        private enum enumMixinStr_INT64_MIN = `enum INT64_MIN = ( - 9223372036854775807L - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT64_MIN); }))) {
+            mixin(enumMixinStr_INT64_MIN);
+        }
+    }
+
+
+
+
+
+
+    static if(!is(typeof(INT32_MIN))) {
+        private enum enumMixinStr_INT32_MIN = `enum INT32_MIN = ( - 2147483647 - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT32_MIN); }))) {
+            mixin(enumMixinStr_INT32_MIN);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(INT16_MIN))) {
+        private enum enumMixinStr_INT16_MIN = `enum INT16_MIN = ( - 32767 - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT16_MIN); }))) {
+            mixin(enumMixinStr_INT16_MIN);
+        }
+    }
+
+
+
+
+
+
+    static if(!is(typeof(INT8_MIN))) {
+        private enum enumMixinStr_INT8_MIN = `enum INT8_MIN = ( - 128 );`;
+        static if(is(typeof({ mixin(enumMixinStr_INT8_MIN); }))) {
+            mixin(enumMixinStr_INT8_MIN);
+        }
+    }
+    static if(!is(typeof(_STDINT_H))) {
+        private enum enumMixinStr__STDINT_H = `enum _STDINT_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__STDINT_H); }))) {
+            mixin(enumMixinStr__STDINT_H);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__CFLOAT32))) {
+        private enum enumMixinStr___CFLOAT32 = `enum __CFLOAT32 = _Complex float;`;
+        static if(is(typeof({ mixin(enumMixinStr___CFLOAT32); }))) {
+            mixin(enumMixinStr___CFLOAT32);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(_STDC_PREDEF_H))) {
+        private enum enumMixinStr__STDC_PREDEF_H = `enum _STDC_PREDEF_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__STDC_PREDEF_H); }))) {
+            mixin(enumMixinStr__STDC_PREDEF_H);
+        }
+    }
+
+
+
+
+
+
+    static if(!is(typeof(__CFLOAT64))) {
+        private enum enumMixinStr___CFLOAT64 = `enum __CFLOAT64 = _Complex double;`;
+        static if(is(typeof({ mixin(enumMixinStr___CFLOAT64); }))) {
+            mixin(enumMixinStr___CFLOAT64);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__GLIBC_MINOR__))) {
+        private enum enumMixinStr___GLIBC_MINOR__ = `enum __GLIBC_MINOR__ = 33;`;
+        static if(is(typeof({ mixin(enumMixinStr___GLIBC_MINOR__); }))) {
+            mixin(enumMixinStr___GLIBC_MINOR__);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__GLIBC__))) {
+        private enum enumMixinStr___GLIBC__ = `enum __GLIBC__ = 2;`;
+        static if(is(typeof({ mixin(enumMixinStr___GLIBC__); }))) {
+            mixin(enumMixinStr___GLIBC__);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__CFLOAT32X))) {
+        private enum enumMixinStr___CFLOAT32X = `enum __CFLOAT32X = _Complex double;`;
+        static if(is(typeof({ mixin(enumMixinStr___CFLOAT32X); }))) {
+            mixin(enumMixinStr___CFLOAT32X);
         }
     }
 
@@ -2004,6 +2616,14 @@ extern(C)
 
 
 
+    static if(!is(typeof(__CFLOAT64X))) {
+        private enum enumMixinStr___CFLOAT64X = `enum __CFLOAT64X = _Complex long double;`;
+        static if(is(typeof({ mixin(enumMixinStr___CFLOAT64X); }))) {
+            mixin(enumMixinStr___CFLOAT64X);
+        }
+    }
+
+
 
 
     static if(!is(typeof(__USE_FORTIFY_LEVEL))) {
@@ -2022,8 +2642,6 @@ extern(C)
             mixin(enumMixinStr___USE_ATFILE);
         }
     }
-
-
 
 
 
@@ -2048,8 +2666,6 @@ extern(C)
 
 
 
-
-
     static if(!is(typeof(__USE_XOPEN2K8))) {
         private enum enumMixinStr___USE_XOPEN2K8 = `enum __USE_XOPEN2K8 = 1;`;
         static if(is(typeof({ mixin(enumMixinStr___USE_XOPEN2K8); }))) {
@@ -2066,18 +2682,12 @@ extern(C)
             mixin(enumMixinStr___USE_ISOC99);
         }
     }
-
-
-
-
     static if(!is(typeof(__USE_ISOC95))) {
         private enum enumMixinStr___USE_ISOC95 = `enum __USE_ISOC95 = 1;`;
         static if(is(typeof({ mixin(enumMixinStr___USE_ISOC95); }))) {
             mixin(enumMixinStr___USE_ISOC95);
         }
     }
-
-
 
 
 
@@ -2108,24 +2718,10 @@ extern(C)
             mixin(enumMixinStr___USE_POSIX199309);
         }
     }
-
-
-
-
     static if(!is(typeof(__USE_POSIX2))) {
         private enum enumMixinStr___USE_POSIX2 = `enum __USE_POSIX2 = 1;`;
         static if(is(typeof({ mixin(enumMixinStr___USE_POSIX2); }))) {
             mixin(enumMixinStr___USE_POSIX2);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__CFLOAT32))) {
-        private enum enumMixinStr___CFLOAT32 = `enum __CFLOAT32 = _Complex float;`;
-        static if(is(typeof({ mixin(enumMixinStr___CFLOAT32); }))) {
-            mixin(enumMixinStr___CFLOAT32);
         }
     }
 
@@ -2152,40 +2748,16 @@ extern(C)
 
 
 
-    static if(!is(typeof(__CFLOAT64))) {
-        private enum enumMixinStr___CFLOAT64 = `enum __CFLOAT64 = _Complex double;`;
-        static if(is(typeof({ mixin(enumMixinStr___CFLOAT64); }))) {
-            mixin(enumMixinStr___CFLOAT64);
-        }
-    }
-
-
-
-
     static if(!is(typeof(_POSIX_SOURCE))) {
         private enum enumMixinStr__POSIX_SOURCE = `enum _POSIX_SOURCE = 1;`;
         static if(is(typeof({ mixin(enumMixinStr__POSIX_SOURCE); }))) {
             mixin(enumMixinStr__POSIX_SOURCE);
         }
     }
-
-
-
-
     static if(!is(typeof(__USE_POSIX_IMPLICITLY))) {
         private enum enumMixinStr___USE_POSIX_IMPLICITLY = `enum __USE_POSIX_IMPLICITLY = 1;`;
         static if(is(typeof({ mixin(enumMixinStr___USE_POSIX_IMPLICITLY); }))) {
             mixin(enumMixinStr___USE_POSIX_IMPLICITLY);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__CFLOAT32X))) {
-        private enum enumMixinStr___CFLOAT32X = `enum __CFLOAT32X = _Complex double;`;
-        static if(is(typeof({ mixin(enumMixinStr___CFLOAT32X); }))) {
-            mixin(enumMixinStr___CFLOAT32X);
         }
     }
 
@@ -2202,26 +2774,12 @@ extern(C)
 
 
 
-    static if(!is(typeof(__CFLOAT64X))) {
-        private enum enumMixinStr___CFLOAT64X = `enum __CFLOAT64X = _Complex long double;`;
-        static if(is(typeof({ mixin(enumMixinStr___CFLOAT64X); }))) {
-            mixin(enumMixinStr___CFLOAT64X);
-        }
-    }
-
-
-
-
     static if(!is(typeof(__GLIBC_USE_ISOC2X))) {
         private enum enumMixinStr___GLIBC_USE_ISOC2X = `enum __GLIBC_USE_ISOC2X = 0;`;
         static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_ISOC2X); }))) {
             mixin(enumMixinStr___GLIBC_USE_ISOC2X);
         }
     }
-
-
-
-
     static if(!is(typeof(_DEFAULT_SOURCE))) {
         private enum enumMixinStr__DEFAULT_SOURCE = `enum _DEFAULT_SOURCE = 1;`;
         static if(is(typeof({ mixin(enumMixinStr__DEFAULT_SOURCE); }))) {
@@ -2234,6 +2792,64 @@ extern(C)
             mixin(enumMixinStr__FEATURES_H);
         }
     }
+
+
+
+
+    static if(!is(typeof(__HAVE_FLOAT128))) {
+        private enum enumMixinStr___HAVE_FLOAT128 = `enum __HAVE_FLOAT128 = 0;`;
+        static if(is(typeof({ mixin(enumMixinStr___HAVE_FLOAT128); }))) {
+            mixin(enumMixinStr___HAVE_FLOAT128);
+        }
+    }
+
+
+
+
+
+
+    static if(!is(typeof(__HAVE_DISTINCT_FLOAT128))) {
+        private enum enumMixinStr___HAVE_DISTINCT_FLOAT128 = `enum __HAVE_DISTINCT_FLOAT128 = 0;`;
+        static if(is(typeof({ mixin(enumMixinStr___HAVE_DISTINCT_FLOAT128); }))) {
+            mixin(enumMixinStr___HAVE_DISTINCT_FLOAT128);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__HAVE_FLOAT64X))) {
+        private enum enumMixinStr___HAVE_FLOAT64X = `enum __HAVE_FLOAT64X = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr___HAVE_FLOAT64X); }))) {
+            mixin(enumMixinStr___HAVE_FLOAT64X);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__HAVE_FLOAT64X_LONG_DOUBLE))) {
+        private enum enumMixinStr___HAVE_FLOAT64X_LONG_DOUBLE = `enum __HAVE_FLOAT64X_LONG_DOUBLE = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr___HAVE_FLOAT64X_LONG_DOUBLE); }))) {
+            mixin(enumMixinStr___HAVE_FLOAT64X_LONG_DOUBLE);
+        }
+    }
+    static if(!is(typeof(__GLIBC_USE_LIB_EXT2))) {
+        private enum enumMixinStr___GLIBC_USE_LIB_EXT2 = `enum __GLIBC_USE_LIB_EXT2 = 0;`;
+        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_LIB_EXT2); }))) {
+            mixin(enumMixinStr___GLIBC_USE_LIB_EXT2);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__GLIBC_USE_IEC_60559_BFP_EXT))) {
+        private enum enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT = `enum __GLIBC_USE_IEC_60559_BFP_EXT = 0;`;
+        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT); }))) {
+            mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT);
+        }
+    }
     static if(!is(typeof(BYTE_ORDER))) {
         private enum enumMixinStr_BYTE_ORDER = `enum BYTE_ORDER = 1234;`;
         static if(is(typeof({ mixin(enumMixinStr_BYTE_ORDER); }))) {
@@ -2242,6 +2858,24 @@ extern(C)
     }
 
 
+
+
+    static if(!is(typeof(__GLIBC_USE_IEC_60559_BFP_EXT_C2X))) {
+        private enum enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT_C2X = `enum __GLIBC_USE_IEC_60559_BFP_EXT_C2X = 0;`;
+        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT_C2X); }))) {
+            mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT_C2X);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__GLIBC_USE_IEC_60559_FUNCS_EXT))) {
+        private enum enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT = `enum __GLIBC_USE_IEC_60559_FUNCS_EXT = 0;`;
+        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT); }))) {
+            mixin(enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT);
+        }
+    }
 
 
 
@@ -2286,86 +2920,6 @@ extern(C)
 
 
 
-
-
-    static if(!is(typeof(__HAVE_FLOAT128))) {
-        private enum enumMixinStr___HAVE_FLOAT128 = `enum __HAVE_FLOAT128 = 0;`;
-        static if(is(typeof({ mixin(enumMixinStr___HAVE_FLOAT128); }))) {
-            mixin(enumMixinStr___HAVE_FLOAT128);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__HAVE_DISTINCT_FLOAT128))) {
-        private enum enumMixinStr___HAVE_DISTINCT_FLOAT128 = `enum __HAVE_DISTINCT_FLOAT128 = 0;`;
-        static if(is(typeof({ mixin(enumMixinStr___HAVE_DISTINCT_FLOAT128); }))) {
-            mixin(enumMixinStr___HAVE_DISTINCT_FLOAT128);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__HAVE_FLOAT64X))) {
-        private enum enumMixinStr___HAVE_FLOAT64X = `enum __HAVE_FLOAT64X = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr___HAVE_FLOAT64X); }))) {
-            mixin(enumMixinStr___HAVE_FLOAT64X);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__HAVE_FLOAT64X_LONG_DOUBLE))) {
-        private enum enumMixinStr___HAVE_FLOAT64X_LONG_DOUBLE = `enum __HAVE_FLOAT64X_LONG_DOUBLE = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr___HAVE_FLOAT64X_LONG_DOUBLE); }))) {
-            mixin(enumMixinStr___HAVE_FLOAT64X_LONG_DOUBLE);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(_ALLOCA_H))) {
-        private enum enumMixinStr__ALLOCA_H = `enum _ALLOCA_H = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr__ALLOCA_H); }))) {
-            mixin(enumMixinStr__ALLOCA_H);
-        }
-    }
-    static if(!is(typeof(__GLIBC_USE_LIB_EXT2))) {
-        private enum enumMixinStr___GLIBC_USE_LIB_EXT2 = `enum __GLIBC_USE_LIB_EXT2 = 0;`;
-        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_LIB_EXT2); }))) {
-            mixin(enumMixinStr___GLIBC_USE_LIB_EXT2);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__GLIBC_USE_IEC_60559_BFP_EXT))) {
-        private enum enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT = `enum __GLIBC_USE_IEC_60559_BFP_EXT = 0;`;
-        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT); }))) {
-            mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT);
-        }
-    }
-    static if(!is(typeof(__GLIBC_USE_IEC_60559_BFP_EXT_C2X))) {
-        private enum enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT_C2X = `enum __GLIBC_USE_IEC_60559_BFP_EXT_C2X = 0;`;
-        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT_C2X); }))) {
-            mixin(enumMixinStr___GLIBC_USE_IEC_60559_BFP_EXT_C2X);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__GLIBC_USE_IEC_60559_FUNCS_EXT))) {
-        private enum enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT = `enum __GLIBC_USE_IEC_60559_FUNCS_EXT = 0;`;
-        static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT); }))) {
-            mixin(enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT);
-        }
-    }
     static if(!is(typeof(__GLIBC_USE_IEC_60559_FUNCS_EXT_C2X))) {
         private enum enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT_C2X = `enum __GLIBC_USE_IEC_60559_FUNCS_EXT_C2X = 0;`;
         static if(is(typeof({ mixin(enumMixinStr___GLIBC_USE_IEC_60559_FUNCS_EXT_C2X); }))) {
@@ -2402,6 +2956,22 @@ extern(C)
             mixin(enumMixinStr__BITS_PTHREADTYPES_ARCH_H);
         }
     }
+
+
+
+
+
+
+    static if(!is(typeof(_ALLOCA_H))) {
+        private enum enumMixinStr__ALLOCA_H = `enum _ALLOCA_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__ALLOCA_H); }))) {
+            mixin(enumMixinStr__ALLOCA_H);
+        }
+    }
+
+
+
+
     static if(!is(typeof(__SIZEOF_PTHREAD_MUTEX_T))) {
         private enum enumMixinStr___SIZEOF_PTHREAD_MUTEX_T = `enum __SIZEOF_PTHREAD_MUTEX_T = 40;`;
         static if(is(typeof({ mixin(enumMixinStr___SIZEOF_PTHREAD_MUTEX_T); }))) {
@@ -2494,6 +3064,12 @@ extern(C)
             mixin(enumMixinStr__BITS_PTHREADTYPES_COMMON_H);
         }
     }
+    static if(!is(typeof(__have_pthread_attr_t))) {
+        private enum enumMixinStr___have_pthread_attr_t = `enum __have_pthread_attr_t = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr___have_pthread_attr_t); }))) {
+            mixin(enumMixinStr___have_pthread_attr_t);
+        }
+    }
     static if(!is(typeof(LFDS711_PRNG_SPLITMIX_MULTIPLY_CONSTANT_TWO))) {
         private enum enumMixinStr_LFDS711_PRNG_SPLITMIX_MULTIPLY_CONSTANT_TWO = `enum LFDS711_PRNG_SPLITMIX_MULTIPLY_CONSTANT_TWO = 0x94D049BB133111EBLU;`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_PRNG_SPLITMIX_MULTIPLY_CONSTANT_TWO); }))) {
@@ -2548,16 +3124,6 @@ extern(C)
         private enum enumMixinStr_LFDS711_PRNG_SPLITMIX_MAGIC_RATIO = `enum LFDS711_PRNG_SPLITMIX_MAGIC_RATIO = 0x9E3779B97F4A7C15LU;`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_PRNG_SPLITMIX_MAGIC_RATIO); }))) {
             mixin(enumMixinStr_LFDS711_PRNG_SPLITMIX_MAGIC_RATIO);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(__have_pthread_attr_t))) {
-        private enum enumMixinStr___have_pthread_attr_t = `enum __have_pthread_attr_t = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr___have_pthread_attr_t); }))) {
-            mixin(enumMixinStr___have_pthread_attr_t);
         }
     }
 
@@ -2626,6 +3192,22 @@ extern(C)
             mixin(enumMixinStr_LFDS711_PAL_OS_STRING);
         }
     }
+    static if(!is(typeof(_BITS_STDINT_INTN_H))) {
+        private enum enumMixinStr__BITS_STDINT_INTN_H = `enum _BITS_STDINT_INTN_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__BITS_STDINT_INTN_H); }))) {
+            mixin(enumMixinStr__BITS_STDINT_INTN_H);
+        }
+    }
+    static if(!is(typeof(_BITS_STDINT_UINTN_H))) {
+        private enum enumMixinStr__BITS_STDINT_UINTN_H = `enum _BITS_STDINT_UINTN_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__BITS_STDINT_UINTN_H); }))) {
+            mixin(enumMixinStr__BITS_STDINT_UINTN_H);
+        }
+    }
+
+
+
+
     static if(!is(typeof(LFDS711_PAL_BARRIER_PROCESSOR_FULL))) {
         private enum enumMixinStr_LFDS711_PAL_BARRIER_PROCESSOR_FULL = `enum LFDS711_PAL_BARRIER_PROCESSOR_FULL = __sync_synchronize ( );`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_PAL_BARRIER_PROCESSOR_FULL); }))) {
@@ -2686,16 +3268,20 @@ extern(C)
 
 
 
+    static if(!is(typeof(_THREAD_MUTEX_INTERNAL_H))) {
+        private enum enumMixinStr__THREAD_MUTEX_INTERNAL_H = `enum _THREAD_MUTEX_INTERNAL_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__THREAD_MUTEX_INTERNAL_H); }))) {
+            mixin(enumMixinStr__THREAD_MUTEX_INTERNAL_H);
+        }
+    }
+
+
+
+
     static if(!is(typeof(LFDS711_PAL_INLINE))) {
         private enum enumMixinStr_LFDS711_PAL_INLINE = `enum LFDS711_PAL_INLINE = inline;`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_PAL_INLINE); }))) {
             mixin(enumMixinStr_LFDS711_PAL_INLINE);
-        }
-    }
-    static if(!is(typeof(_BITS_STDINT_INTN_H))) {
-        private enum enumMixinStr__BITS_STDINT_INTN_H = `enum _BITS_STDINT_INTN_H = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr__BITS_STDINT_INTN_H); }))) {
-            mixin(enumMixinStr__BITS_STDINT_INTN_H);
         }
     }
 
@@ -2714,8 +3300,12 @@ extern(C)
 
 
 
-
-
+    static if(!is(typeof(__PTHREAD_MUTEX_HAVE_PREV))) {
+        private enum enumMixinStr___PTHREAD_MUTEX_HAVE_PREV = `enum __PTHREAD_MUTEX_HAVE_PREV = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr___PTHREAD_MUTEX_HAVE_PREV); }))) {
+            mixin(enumMixinStr___PTHREAD_MUTEX_HAVE_PREV);
+        }
+    }
     static if(!is(typeof(LFDS711_PAL_GCC_VERSION))) {
         private enum enumMixinStr_LFDS711_PAL_GCC_VERSION = `enum LFDS711_PAL_GCC_VERSION = ( 10 * 100 + 3 * 10 + 0 );`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_PAL_GCC_VERSION); }))) {
@@ -2736,6 +3326,16 @@ extern(C)
 
 
 
+    static if(!is(typeof(__PTHREAD_RWLOCK_ELISION_EXTRA))) {
+        private enum enumMixinStr___PTHREAD_RWLOCK_ELISION_EXTRA = `enum __PTHREAD_RWLOCK_ELISION_EXTRA = 0 , { 0 , 0 , 0 , 0 , 0 , 0 , 0 };`;
+        static if(is(typeof({ mixin(enumMixinStr___PTHREAD_RWLOCK_ELISION_EXTRA); }))) {
+            mixin(enumMixinStr___PTHREAD_RWLOCK_ELISION_EXTRA);
+        }
+    }
+
+
+
+
     static if(!is(typeof(LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE))) {
         private enum enumMixinStr_LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE = `enum LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE = LFDS711_MISC_BARRIER_LOAD;`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_MAKE_VALID_ON_CURRENT_LOGICAL_CORE_INITS_COMPLETED_BEFORE_NOW_ON_ANY_OTHER_LOGICAL_CORE); }))) {
@@ -2746,10 +3346,12 @@ extern(C)
 
 
 
-    static if(!is(typeof(_THREAD_MUTEX_INTERNAL_H))) {
-        private enum enumMixinStr__THREAD_MUTEX_INTERNAL_H = `enum _THREAD_MUTEX_INTERNAL_H = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr__THREAD_MUTEX_INTERNAL_H); }))) {
-            mixin(enumMixinStr__THREAD_MUTEX_INTERNAL_H);
+
+
+    static if(!is(typeof(_THREAD_SHARED_TYPES_H))) {
+        private enum enumMixinStr__THREAD_SHARED_TYPES_H = `enum _THREAD_SHARED_TYPES_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__THREAD_SHARED_TYPES_H); }))) {
+            mixin(enumMixinStr__THREAD_SHARED_TYPES_H);
         }
     }
 
@@ -2786,22 +3388,16 @@ extern(C)
 
 
 
-    static if(!is(typeof(__PTHREAD_MUTEX_HAVE_PREV))) {
-        private enum enumMixinStr___PTHREAD_MUTEX_HAVE_PREV = `enum __PTHREAD_MUTEX_HAVE_PREV = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr___PTHREAD_MUTEX_HAVE_PREV); }))) {
-            mixin(enumMixinStr___PTHREAD_MUTEX_HAVE_PREV);
-        }
-    }
-
-
-
-
     static if(!is(typeof(LFDS711_MISC_BARRIER_STORE))) {
         private enum enumMixinStr_LFDS711_MISC_BARRIER_STORE = `enum LFDS711_MISC_BARRIER_STORE = ( lfds711_pal_barrier_compiler ( ) , __sync_synchronize ( ) , lfds711_pal_barrier_compiler ( ) );`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_BARRIER_STORE); }))) {
             mixin(enumMixinStr_LFDS711_MISC_BARRIER_STORE);
         }
     }
+
+
+
+
     static if(!is(typeof(LFDS711_MISC_BARRIER_LOAD))) {
         private enum enumMixinStr_LFDS711_MISC_BARRIER_LOAD = `enum LFDS711_MISC_BARRIER_LOAD = ( lfds711_pal_barrier_compiler ( ) , __sync_synchronize ( ) , lfds711_pal_barrier_compiler ( ) );`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_BARRIER_LOAD); }))) {
@@ -2822,32 +3418,10 @@ extern(C)
 
 
 
-    static if(!is(typeof(__PTHREAD_RWLOCK_ELISION_EXTRA))) {
-        private enum enumMixinStr___PTHREAD_RWLOCK_ELISION_EXTRA = `enum __PTHREAD_RWLOCK_ELISION_EXTRA = 0 , { 0 , 0 , 0 , 0 , 0 , 0 , 0 };`;
-        static if(is(typeof({ mixin(enumMixinStr___PTHREAD_RWLOCK_ELISION_EXTRA); }))) {
-            mixin(enumMixinStr___PTHREAD_RWLOCK_ELISION_EXTRA);
-        }
-    }
-
-
-
-
     static if(!is(typeof(LFDS711_MISC_ATOMIC_SUPPORT_EXCHANGE))) {
         private enum enumMixinStr_LFDS711_MISC_ATOMIC_SUPPORT_EXCHANGE = `enum LFDS711_MISC_ATOMIC_SUPPORT_EXCHANGE = 1;`;
         static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_ATOMIC_SUPPORT_EXCHANGE); }))) {
             mixin(enumMixinStr_LFDS711_MISC_ATOMIC_SUPPORT_EXCHANGE);
-        }
-    }
-
-
-
-
-
-
-    static if(!is(typeof(_THREAD_SHARED_TYPES_H))) {
-        private enum enumMixinStr__THREAD_SHARED_TYPES_H = `enum _THREAD_SHARED_TYPES_H = 1;`;
-        static if(is(typeof({ mixin(enumMixinStr__THREAD_SHARED_TYPES_H); }))) {
-            mixin(enumMixinStr__THREAD_SHARED_TYPES_H);
         }
     }
 
@@ -2924,22 +3498,6 @@ extern(C)
 
 
 
-    static if(!is(typeof(LFDS711_MISC_VERSION_INTEGER))) {
-        private enum enumMixinStr_LFDS711_MISC_VERSION_INTEGER = `enum LFDS711_MISC_VERSION_INTEGER = 711;`;
-        static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_VERSION_INTEGER); }))) {
-            mixin(enumMixinStr_LFDS711_MISC_VERSION_INTEGER);
-        }
-    }
-
-
-
-
-    static if(!is(typeof(LFDS711_MISC_VERSION_STRING))) {
-        private enum enumMixinStr_LFDS711_MISC_VERSION_STRING = `enum LFDS711_MISC_VERSION_STRING = "7.1.1";`;
-        static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_VERSION_STRING); }))) {
-            mixin(enumMixinStr_LFDS711_MISC_VERSION_STRING);
-        }
-    }
     static if(!is(typeof(__ONCE_FLAG_INIT))) {
         private enum enumMixinStr___ONCE_FLAG_INIT = `enum __ONCE_FLAG_INIT = { 0 };`;
         static if(is(typeof({ mixin(enumMixinStr___ONCE_FLAG_INIT); }))) {
@@ -2948,6 +3506,14 @@ extern(C)
     }
 
 
+
+
+    static if(!is(typeof(LFDS711_MISC_VERSION_INTEGER))) {
+        private enum enumMixinStr_LFDS711_MISC_VERSION_INTEGER = `enum LFDS711_MISC_VERSION_INTEGER = 711;`;
+        static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_VERSION_INTEGER); }))) {
+            mixin(enumMixinStr_LFDS711_MISC_VERSION_INTEGER);
+        }
+    }
 
 
 
@@ -2960,6 +3526,14 @@ extern(C)
     }
 
 
+
+
+    static if(!is(typeof(LFDS711_MISC_VERSION_STRING))) {
+        private enum enumMixinStr_LFDS711_MISC_VERSION_STRING = `enum LFDS711_MISC_VERSION_STRING = "7.1.1";`;
+        static if(is(typeof({ mixin(enumMixinStr_LFDS711_MISC_VERSION_STRING); }))) {
+            mixin(enumMixinStr_LFDS711_MISC_VERSION_STRING);
+        }
+    }
 
 
 
@@ -3054,10 +3628,6 @@ extern(C)
             mixin(enumMixinStr___ULONGWORD_TYPE);
         }
     }
-
-
-
-
     static if(!is(typeof(__SQUAD_TYPE))) {
         private enum enumMixinStr___SQUAD_TYPE = `enum __SQUAD_TYPE = long int;`;
         static if(is(typeof({ mixin(enumMixinStr___SQUAD_TYPE); }))) {
@@ -3144,12 +3714,6 @@ extern(C)
             mixin(enumMixinStr___STD_TYPE);
         }
     }
-
-
-
-
-
-
     static if(!is(typeof(_SIGSET_NWORDS))) {
         private enum enumMixinStr__SIGSET_NWORDS = `enum _SIGSET_NWORDS = ( 1024 / ( 8 * ( unsigned long int ) .sizeof ) );`;
         static if(is(typeof({ mixin(enumMixinStr__SIGSET_NWORDS); }))) {
@@ -3766,6 +4330,36 @@ extern(C)
 
 
 
+    static if(!is(typeof(_BITS_WCHAR_H))) {
+        private enum enumMixinStr__BITS_WCHAR_H = `enum _BITS_WCHAR_H = 1;`;
+        static if(is(typeof({ mixin(enumMixinStr__BITS_WCHAR_H); }))) {
+            mixin(enumMixinStr__BITS_WCHAR_H);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__WCHAR_MAX))) {
+        private enum enumMixinStr___WCHAR_MAX = `enum __WCHAR_MAX = 0x7fffffff;`;
+        static if(is(typeof({ mixin(enumMixinStr___WCHAR_MAX); }))) {
+            mixin(enumMixinStr___WCHAR_MAX);
+        }
+    }
+
+
+
+
+    static if(!is(typeof(__WCHAR_MIN))) {
+        private enum enumMixinStr___WCHAR_MIN = `enum __WCHAR_MIN = ( - 0x7fffffff - 1 );`;
+        static if(is(typeof({ mixin(enumMixinStr___WCHAR_MIN); }))) {
+            mixin(enumMixinStr___WCHAR_MIN);
+        }
+    }
+
+
+
+
     static if(!is(typeof(__WORDSIZE))) {
         private enum enumMixinStr___WORDSIZE = `enum __WORDSIZE = 64;`;
         static if(is(typeof({ mixin(enumMixinStr___WORDSIZE); }))) {
@@ -4065,6 +4659,8 @@ extern(C)
         }
     }
 
+
+
 }
 
 
@@ -4150,7 +4746,7 @@ shared class queue_bmm(T) { // do NOT use shared, let the user decide
   // we *always* want to pass by ref, the value should never be copied
   bool push(T)(ref T value) {
    static if(treatAsStructInC!T) {
-    void* v = cast(void*)(&value);
+    container_value_t v = cast(container_value_t)(&value);
     /* we can NOT do this! this same object could be in multiple such C-containers
     ref:do_NOT_GC.removeRoot
     // https://dlang.org/phobos/core_memory.html#addRoot
@@ -4158,7 +4754,7 @@ shared class queue_bmm(T) { // do NOT use shared, let the user decide
     GC.setAttr(v, GC.BlkAttr.NO_MOVE);
     */
    } else {
-    void* v = cast(void*)value;
+    container_value_t v = cast(container_value_t)(cast(void*)value);
    }
     return queue_bmm_push(cast(c_queue_bmm*)_queue, v);
   }
@@ -4168,9 +4764,9 @@ shared class queue_bmm(T) { // do NOT use shared, let the user decide
   // Returns 1 on a successful dequeue. Returns 0 if dequeing failed. Dequeuing only fails if the queue is empty.
   PopT pop() {
     int ok;
-    void* value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
+    container_value_t value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
     if (ok) {
-      PopT result = cast(PopT)value;
+      PopT result = cast(PopT)(cast(void*)value);
       static if(treatAsStructInC!T) {
         /* we can NOT do this! this same object could be in multiple such C-containers;
            we can NOT put it back to GC, just because it's popped from this queue
