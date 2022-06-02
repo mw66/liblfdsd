@@ -15,8 +15,9 @@ liblfds for D, from the portable, license-free, lock-free data structure C libra
 After install all the deps:
 
 ```
-$ make d
-$ ./liblfds
+$ make build
+$ make test
+$ ./liblfdsd
 # bmm queue
 string: Madge The Skutter; after push & before pop
 string: Madge The Skutter; after push & before pop
@@ -27,6 +28,9 @@ received 100000000 messages in 4868 msec sum=4999999950000000 speed=20542 msg/ms
 
 # bss queue
 received 100000000 messages in 2610 msec sum=4999999950000000 speed=38314 msg/msec
+
+# queue umm
+received 100000000 messages in 14994 msec sum=4999999950000000 speed=6669 msg/msec
 ```
 
 Please check the `comparison` directory for a simple performance comparison with some other D queues.
