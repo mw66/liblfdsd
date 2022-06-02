@@ -4,7 +4,7 @@ LIBLFDS = ./liblfds7.1.1
 DPPFLAGS = --preprocess-only --hard-fail --include-path=$(LIBLFDS)/liblfds711/inc --keep-d-files --compiler=ldmd2 #dmd #ldc2 #
 LDC2_FLAGS = -debug #-d
 LDC2_FLAGS = -O4 --release --boundscheck=off
-DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfds711
+DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfdsdc -L-llfds711
 
 build:
 	dub build
@@ -23,7 +23,7 @@ gen:
 	mv -f liblfdsd.d source/
 
 test:
-	ldmd2 -unittest -version=LIBLFDS_TEST liblfdsd.d $(LDC2_FLAGS) -L$(DMDLIB)
+	ldmd2 -unittest -version=LIBLFDS_TEST source/liblfdsd.d $(LDC2_FLAGS) -L$(DMDLIB)
 	./liblfdsd
 
 liblfdsd.d: liblfdsd.h
