@@ -7,9 +7,17 @@
 // https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(unbounded,_many_producer,_many_consumer)
 
 
+#include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "liblfds711.h"
+
+// let's hide all the uglyness in this C file
+// from D side, it only sees the value type as uintptr_t (void*)
+// https://stackoverflow.com/a/1464194
+// https://stackoverflow.com/a/14068191
+// On segmented architectures, on the other hand, it is usual for uintptr_t to be bigger than size_t
+typedef uintptr_t container_value_t;  // unsigned integer type capable of holding a pointer to void
 
 
 #define INLINE // dpp will remove 'inline' to generate .d; and in .c we need generate the symbol
