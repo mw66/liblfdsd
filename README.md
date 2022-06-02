@@ -82,10 +82,10 @@ Let C's be C's, and let D's be D's, i.e.
 * C manage C's memory (the container), and
 * D manage D's memory (the objects)
 
-The only thing interfacing between C and D is the simple (void*) as *value*, so to use this D library:
+The only thing interfacing between C and D is the simple uintptr_t (void*) as *value*, so to use this D library:
 
-* all primitive types (whose .sizeof upto pointer size on the target machine) | class (pointer)'s *value* are stored as value of (void*)
-* everything else, i.e. all (fat) objects' *address* are stored as value of (void*)
+* all primitive types (whose .sizeof upto pointer size on the target machine) | class (pointer)'s *value* are stored as value of uintptr_t
+* everything else, i.e. all (fat) objects' *address* are stored as value of uintptr_t
 
 The only extra requirement on the D side is to keep reference to those fat objects to avoid it being GC-ed before being pop-ed.
 
