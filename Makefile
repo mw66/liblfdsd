@@ -6,12 +6,19 @@ LDC2_FLAGS = -debug #-d
 LDC2_FLAGS = -O4 --release --boundscheck=off
 DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfds711
 
+build:
+	dub build
+
 gen:
 	make clean
+	tar xjf lib/liblfds\ release\ 7.1.1\ source.tar.bz2
+	# https://liblfds.org/mediawiki/index.php?title=r7.1.1:Building_Guide_(liblfds)
+	cd liblfds7.1.1/liblfds711/build/gcc_gnumake && make ar_rel
+	mv -f liblfds7.1.1/liblfds711/bin/liblfds711.a .
 	sed 's/bmm/bss/g;s/BMM/BSS/g' queue_bmm.h > queue_bss.h
 	# echo sed 's/bmm/umm/g' queue_bmm.h > queue_umm.h  # one time run, then need manual edit
 	gcc $(CFLAGS) -c liblfdsd.c
-	ar rcs liblfdsd.a liblfdsd.o
+	ar rcs liblfdsdc.a liblfdsd.o
 	d++ $(DPPFLAGS)  liblfdsd.dpp
 	mv -f liblfdsd.d source/
 
@@ -36,5 +43,5 @@ c:
 
 
 clean:
-	$(RM) *.o *.a
+	$(RM) -fr liblfds7.1.1/ *.o *.a
 	dub clean
