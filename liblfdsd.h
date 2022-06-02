@@ -1,5 +1,5 @@
-#ifndef queue_bmm_bss_h
-#define queue_bmm_bss_h
+#ifndef liblfdsd_h
+#define liblfdsd_h
 
 // bmm & bss queue has the same API interface:
 // https://www.liblfds.org/mediawiki/index.php?title=r7.1.1:Queue_(bounded,_single_producer,_single_consumer)
@@ -27,4 +27,4 @@ INLINE void ensure_lfds_valid_init_on_current_logical_core() {
 #include "queue_bss.h"
 #include "queue_umm.h"
 
-#endif//queue_bmm_bss_h
+#endif//liblfdsd_h
