@@ -4732,7 +4732,7 @@ shared class queue_bmm(T) { // do NOT use shared, let the user decide
     static if (is(T == class) || is(T == interface)) { // these are pointers in C
       immutable PopT invalidPop = null;
     } else {
-      immutable PopT invalidPop = T.max; // 0 is typically used by user!
+      immutable PopT invalidPop = T.max; // 0 is typically used by user! TODO: remove this invalidPop, or at least doc it
     }
   }
 
