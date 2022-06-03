@@ -19,7 +19,7 @@ gen:
 	# echo sed 's/bmm/umm/g' queue_bmm.h > queue_umm.h  # one time run, then need manual edit
 	gcc $(CFLAGS) -c liblfdsd.c
 	ar rcs liblfdsdc.a liblfdsd.o
-	d++ $(DPPFLAGS)  liblfdsd.dpp
+	dub run dpp -- $(DPPFLAGS)  liblfdsd.dpp
 	mv -f liblfdsd.d source/
 
 test:
