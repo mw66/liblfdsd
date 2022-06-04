@@ -1,5 +1,7 @@
 
 DMD_DFLAGS = -release -m64 -boundscheck=off -O
+
+LDC_DFLAGS = --d-debug
 LDC_DFLAGS = -O4 --release --boundscheck=off
 
 DMD_DUB = DFLAGS="$(DMD_DFLAGS)" ${DMD}/windows/bin/dub.exe
@@ -9,7 +11,8 @@ array:
 	$(LDC_DUB) plain_array.d
 
 ldc1p1c:
-	$(LDC_DUB) rwqueue.d
+	$(LDC_DUB) build --single rwqueue.d
+	./app
 
 dmd1p1c:
 	$(DMD_DUB) rwqueue.d
