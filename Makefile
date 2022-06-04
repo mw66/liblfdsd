@@ -1,7 +1,7 @@
 
 LIBLFDS = ./liblfds7.1.1
 
-DPPFLAGS = --preprocess-only --hard-fail --include-path=$(LIBLFDS)/liblfds711/inc --keep-d-files --compiler=ldmd2 #dmd #ldc2 #
+DPPFLAGS = --preprocess-only --hard-fail --include-path=$(LIBLFDS)/liblfds711/inc --include-path=. --keep-d-files --compiler=ldmd2 #dmd #ldc2 #
 LDC2_FLAGS = -debug #-d
 LDC2_FLAGS = -O4 --release --boundscheck=off
 DMDLIB = -L$(LIBLFDS)/liblfds711/bin -L-L. -L-llfdsd -L-llfdsdc -L-llfds711
@@ -19,8 +19,8 @@ gen:
 	# echo sed 's/bmm/umm/g' queue_bmm.h > queue_umm.h  # one time run, then need manual edit
 	gcc $(CFLAGS) -c liblfdsd.c
 	ar rcs liblfdsdc.a liblfdsd.o
-	dub run dpp -- $(DPPFLAGS)  liblfdsd.dpp
-	mv -f liblfdsd.d source/
+	dub run dpp -- $(DPPFLAGS)  source/liblfdsd.dpp
+
 
 test:
 	ldmd2 -unittest -version=LIBLFDS_TEST source/liblfdsd.d $(LDC2_FLAGS) -L$(DMDLIB)
