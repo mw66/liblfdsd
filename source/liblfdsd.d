@@ -4866,7 +4866,7 @@ unittest {
 void testIntQueue() {
   auto queue = new shared(SafeQueue!int);
 
-  writeln(int.init, int.max, queue.invalidPop);
+  writeln([int.init, int.max, queue.invalidPop]);
   spawn(&threadProducer, queue);
   spawn(&threadConsumer, queue);
 
