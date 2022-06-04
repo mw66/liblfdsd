@@ -1,7 +1,8 @@
 //module lock_free.dlist;
 
 import std.algorithm, std.concurrency, std.conv, std.stdio;
-import core.atomic, core.thread;
+import core.atomic;
+import core.thread;
 
 ////////////////////////////////////////////////////////////////////////////////
 // lock-free implementation
@@ -14,10 +15,12 @@ shared class AtomicDList(T)
         private align(16) Node* _prev;
         private align(16) Node* _next;
         private T _payload;
+        static shared long allocCount;
 
         this(shared T payload) shared
         {
             this._payload = payload;
+            atomicOp!"+="(allocCount, 1);
         }
 
         @property shared(Node)* prev()
