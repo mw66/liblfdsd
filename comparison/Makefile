@@ -11,11 +11,11 @@ array:
 	$(LDC_DUB) plain_array.d
 
 ldc1p1c:
-	$(LDC_DUB) build --single rwqueue.d
+	$(LDC_DUB) build --single test_queue.d
 	./app
 
 dmd1p1c:
-	$(DMD_DUB) rwqueue.d
+	$(DMD_DUB) test_queue.d
 
 
 dlist:
@@ -40,7 +40,8 @@ go_d:
 	$(LDC_DUB) go.d
 
 jin_go_q:
-	ldc2 $(LDC_DFLAGS) rwqueue.d jin_go_queue.d
+	ldc2 $(LDC_DFLAGS) test_queue.d jin_go_queue.d
+	./test_queue
 
 clean:
 	$(RM) *.o
