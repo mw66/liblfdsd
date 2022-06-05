@@ -111,6 +111,8 @@ Instead, rewrite them as:
   queue.push(dSideRefHolder_toPreventGC_BeforePoped_Var);
 ```
 
+Another way is manually (without GC) allocate the object, so GC will not scan them (and their fields) for collection.
+
 ## Known issue:
 
 * the queue_umm.h will leak one lfds711_queue_umm_element upon queue_umm_destroy() call.
