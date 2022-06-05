@@ -3,7 +3,7 @@
 name "app"
 dependency "lock-free" version="~>0.1.2"
 dependency "dests" version="0.3.1"
-dependency "rust_interop_d" version="0.2.2"
+dependency "rust_interop_d" version="0.2.6"
 dflags "-release" "-m64" "-boundscheck=off" "-O" platform="dmd"
 dflags "-O4" "--release" "--boundscheck=off" platform="ldc2"
 +/
@@ -23,7 +23,7 @@ import core.thread, std.concurrency;
 import std.process;
 
 
-const long n=100_000_000; //; //; //;_000
+const long n=1_000_000; //; //; //;_000
 enum amount = n;
 
 void push(Q, T)(ref shared(Q) queue) {
@@ -79,24 +79,37 @@ void test_lock_free_rwqueue() {
     run_test!(RWQueue!Data, Data)(queue);
 }
 
-/*
+
+void test_lock_free_dlist() {
+  version (none) {
+    import lock_free.dlist;
+    alias SafeQueue = AtomicDList!Data;
+    shared(SafeQueue) queue;
+    run_test!(SafeQueue, Data)(queue);
+  }
+}
+
+
 void test_jin_go_queue() {
+  version (none) {
     import jin_go_queue;
     shared Queue!Data queue = new Queue!Data;
     run_test!(Queue!Data, Data)(queue);
+  }
 }
-*/
+
 
 // received 100000000 messages in 18938 msec sum:4999999950000000 speed=5280 msg/msec; 4999999950000000
 void test_rust_queue() {
     import rust_interop;
-    auto queue = new shared(SegQueue);
-    run_test!(SegQueue, Data)(queue);
+    auto queue = new shared(SegQueue!Data);
+    run_test!(SegQueue!Data, Data)(queue);
 }
 
 void main() {
   test_lock_free_rwqueue();
-  // test_jin_go_queue();
+  test_lock_free_dlist();
   test_rust_queue();
+  test_jin_go_queue();
 }
 
