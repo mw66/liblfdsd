@@ -56,19 +56,15 @@ bool treatAsStructInC(T)() {
 enum queue_bmm_decl = q{
 
 // this class is shared: otherwise, please use a normal queue
-shared class queue_bmm(T) {  // do NOT use shared, let the user decide
+// T: could be stuct*|class, string*|array*, int|double
+shared class queue_bmm(T) {
  public:
 
-  static if (treatAsStructInC!T) {
-    alias  PopT = T*;
+  alias  PopT = T;
+  static if (is(T == class) || is(T == interface) || isPointer!(T)) {  // these are pointers in C
     immutable PopT invalidPop = null;
   } else {
-    alias  PopT = T;
-    static if (is(T == class) || is(T == interface)) {  // these are pointers in C
-      immutable PopT invalidPop = null;
-    } else {
-      immutable PopT invalidPop = T.max;  // 0 is typically used by user! TODO: remove this invalidPop, or at least doc it
-    }
+    immutable PopT invalidPop = T.max;  // 0 is typically used by user! TODO: remove this invalidPop, or at least doc it
   }
 
   this(size_t n=1024) {
@@ -77,20 +73,9 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
   }
 
   // return false, when the queue is full
-  // T: could be stuct|class, string|array, int|double
-  // we *always* want to pass by ref, the value should never be copied
-  bool push(T)(ref T value) {
-   static if(treatAsStructInC!T) {
-    container_value_t v = cast(container_value_t)(&value);
-    /* we can NOT do this! this same object could be in multiple such C-containers
-    ref:do_NOT_GC.removeRoot
-    // https://dlang.org/phobos/core_memory.html#addRoot
-    GC.addRoot(v);
-    GC.setAttr(v, GC.BlkAttr.NO_MOVE);
-    */
-   } else {
+  // the value must be simple scalar type, can be copied
+  bool push(T value) {
     container_value_t v = cast(container_value_t)(cast(void*)value);
-   }
     return queue_bmm_push(cast(c_queue_bmm*)_queue, v);
   }
 
@@ -102,14 +87,6 @@ shared class queue_bmm(T) {  // do NOT use shared, let the user decide
     container_value_t value = queue_bmm_pop(cast(c_queue_bmm*)_queue, &ok);
     if (ok) {
       PopT result = cast(PopT)(cast(void*)value);
-      static if(treatAsStructInC!T) {
-        /* we can NOT do this! this same object could be in multiple such C-containers;
-           we can NOT put it back to GC, just because it's popped from this queue
-        ref:do_NOT_GC.removeRoot
-        GC.removeRoot(value);
-        GC.clrAttr(value, GC.BlkAttr.NO_MOVE);
-        */
-      }
       return result;
     }
     return cast(PopT)invalidPop;
@@ -210,9 +187,9 @@ void testIntQueue() {
 
 void testStringQueue() {
   string name = "string: Madge The Skutter";
-  string* temp_td;
+  string* temp_td = null;
 
-  auto queue = new shared(SafeQueue!string)(2);
+  auto queue = new shared(SafeQueue!(string*))(2);
   ensure_lfds_valid_init_on_current_logical_core();
 
   assert(0 == queue.length());
@@ -220,11 +197,11 @@ void testStringQueue() {
   assert(!queue.full());
 
   assert(name == "string: Madge The Skutter");
-  queue.push(name);
+  queue.push(&name);
   assert(1 == queue.length());
 
   string full = "full";
-  queue.push(full);  // won't store string literal
+  queue.push(&full);  // won't store string literal
   assert(2 == queue.length());
   assert(queue.full());
 
@@ -236,11 +213,13 @@ void testStringQueue() {
   writeln(*temp_td);
   assert(name     == "string: Madge The Skutter; change the pushed after push & before pop");
   assert(*temp_td == "string: Madge The Skutter; change the pushed after push & before pop");
+  assert(temp_td == &name);  // it is the name's address that we pushed!
 
   temp_td = queue.pop();
   writeln(*temp_td);
   assert(0 == queue.length());
   assert(*temp_td == "full");
+  assert(temp_td == &full);  // it is the full's address that we pushed!
 }
 
 void testStructQueue() {
@@ -249,15 +228,16 @@ void testStructQueue() {
   }
 
   test_data  td;
-  test_data* temp_td;
+  test_data* temp_td = null;
   td.name = "struct: Madge The Skutter";
 
-  auto queue = new shared(SafeQueue!test_data);
+  auto queue = new shared(SafeQueue!(test_data*));  // TODO: shall we pass in test_data or test_data*?
   assert(td.name == "struct: Madge The Skutter");
-  queue.push(td);
+  queue.push(&td);
   td.name ~= "; after push & before pop";
   temp_td = queue.pop();
   assert(temp_td.name == "struct: Madge The Skutter; after push & before pop");
+  assert(temp_td == &td);  // it is the address we pushed in!
 
   printf( "skutter name = %s %lu\n", &(temp_td.name[0]), voidpp.sizeof );
 }
@@ -285,7 +265,7 @@ void testClassQueue() {
 }
 
 void main() {
-//testStringQueue();  TODO: revive for queue_bss;
+  testStringQueue();  // TODO: revive for queue_bss;
   testStructQueue();
   testClassQueue();
   testIntQueue();
